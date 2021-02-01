@@ -1,0 +1,8 @@
+---
+- name: Setup Suricata
+  hosts: ubuntu-vm
+  become: true
+  tasks:
+    - name: Test connection
+      ping:    
+  
