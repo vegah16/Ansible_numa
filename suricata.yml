@@ -1,7 +1,31 @@
 ---
 - name: Setup Suricata
-  hosts: ubuntu
-  become: true
+  hosts: ubuntu # Group in ansible hosts file.
+  become: yes # Become root.
   tasks:
-    - name: Test connection
-      ping:
+    - name: Set passwordless sudo # To prevent entering the password when ansible executes.
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+    - name: Install Suricata and jq
+      package:
+        name:
+          - suricata
+          - jq  # Command-line JSON processor.
+        state: latest
+    - name: Configure suricata to use active NIC
+      lineinfile:
+        firstmatch: yes
+        path: /etc/suricata/suricata.yaml
+        regexp: '^\s\s-\sinterface:\s'
+        line: '  - interface: {{ansible_default_ipv4.interface}}'
+    - name: Update signatures
+      command: suricata-update
+    - name: Start suricata
+      service:
+        name: suricata
+        state: restarted
+        enabled: yes
