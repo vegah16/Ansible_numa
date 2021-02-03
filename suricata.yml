@@ -3,6 +3,15 @@
   hosts: ubuntu # Group in ansible hosts file.
   become: yes # Become root.
   tasks:
+
+    - name: install system updates for centos systems
+      yum: name=* state=latest update_cache=yes
+      when: ansible_distribution == "CentOS"
+
+    - name: install system updates for ubuntu systems
+      apt: upgrade=dist update_cache=yes
+      when: ansible_distribution == "Ubuntu"
+
     - name: Set passwordless sudo # To prevent entering the password when ansible executes.
       lineinfile:
         path: /etc/sudoers
@@ -10,20 +19,30 @@
         regexp: '^%sudo'
         line: '%sudo ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
-    - name: Install Suricata and jq
+      
+    - name: Install packages
       package:
         name:
-          - suricata
+          - suricata # IDS
           - jq  # Command-line JSON processor.
+          - ethtool # Query or control network driver and hardware settings
         state: latest
+
+    - name: Add the i40e module # Intel drivers
+      community.general.modprobe:
+        name: i40e
+        state: present
+
     - name: Configure suricata to use active NIC
       lineinfile:
         firstmatch: yes
         path: /etc/suricata/suricata.yaml
         regexp: '^\s\s-\sinterface:\s'
         line: '  - interface: {{ansible_default_ipv4.interface}}'
+
     - name: Update signatures
       command: suricata-update
+
     - name: Start suricata
       service:
         name: suricata

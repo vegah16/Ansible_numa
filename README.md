@@ -11,6 +11,12 @@ Ansible playbook for master's thesis.
 username@ip
 ```
 
+4. Install Ansible dependencies:
+
+```
+$ ansible-galaxy collection install community.general
+```
+
 ## Execute playbook
 For now, when running the playbook for the first time, you have to use the option "-K" so that you can enter the root password. After this, the playbook can run without entering the password.
 
