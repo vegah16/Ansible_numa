@@ -51,13 +51,6 @@
         name: i40e
         state: present
 
-    # - name: Configure suricata to use active NIC
-    #   lineinfile:
-    #     firstmatch: yes
-    #     path: /etc/suricata/suricata.yaml
-    #     regexp: '^\s\s-\sinterface:\s'
-    #     line: '  - interface: {{ansible_default_ipv4.interface}}'
-
     - name: Configure suricata  
       template:  
         src: suricata.yaml.j2  
