@@ -2,6 +2,24 @@
 - name: Setup Suricata
   hosts: ubuntu # Group in ansible hosts file.
   become: yes # Become root.
+  vars:
+    afpacket_interface: "{{ansible_default_ipv4.interface}}"
+    afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
+    afpacket_clustertype: "cluster-qm"
+    afpacket_defrag: "no"
+    afpacket_usemmap: "yes"
+    afpacket_mmaplocked: "yes"
+    afpacket_tpacketv3: "yes"
+    afpacket_ringsize: 100000
+    afpacket_blocksize: 1048576
+    threading_management_cpu: 1
+    threading_receive_cpu: 1
+    threading_worker_cpu: 1
+    threading_worker_prio_low: 0
+    threading_worker_prio_medium: "1-2"
+    threading_worker_prio_high: 3
+    threading_worker_prio_default: "medium"
+    
   tasks:
 
     - name: install system updates for centos systems
@@ -33,12 +51,17 @@
         name: i40e
         state: present
 
-    - name: Configure suricata to use active NIC
-      lineinfile:
-        firstmatch: yes
-        path: /etc/suricata/suricata.yaml
-        regexp: '^\s\s-\sinterface:\s'
-        line: '  - interface: {{ansible_default_ipv4.interface}}'
+    # - name: Configure suricata to use active NIC
+    #   lineinfile:
+    #     firstmatch: yes
+    #     path: /etc/suricata/suricata.yaml
+    #     regexp: '^\s\s-\sinterface:\s'
+    #     line: '  - interface: {{ansible_default_ipv4.interface}}'
+
+    - name: Configure suricata  
+      template:  
+        src: suricata.yaml.j2  
+        dest: /etc/suricata/suricata.yaml  
 
     - name: Update signatures
       command: suricata-update
