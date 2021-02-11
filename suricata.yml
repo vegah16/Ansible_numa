@@ -13,7 +13,7 @@
     afpacket_ringsize: 100000
     afpacket_blocksize: 1048576
     threading_management_cpu: 0
-    threading_receive_cpu: 1
+    threading_receive_cpu: "0-1"
     threading_worker_cpu: 1
     threading_worker_prio_low: 0
     threading_worker_prio_medium: 1
