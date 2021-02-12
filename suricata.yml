@@ -3,7 +3,9 @@
   hosts: ubuntu # Group in ansible hosts file.
   become: yes # Become root.
   vars:
-    afpacket_interface: "{{ansible_default_ipv4.interface}}"
+    mgmt_nic: "{{ansible_default_ipv4.interface}}"
+
+    afpacket_interface: "{{mgmt_nic}}"
     afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
     afpacket_clustertype: "cluster-qm"
     afpacket_defrag: "no"
@@ -65,23 +67,47 @@
         name: i40e
         state: present
 
-# $ service irqbalance stop   # When doing high performance optimisation make sure irqbalance is off and not running
+    - name: Stop irqbalance for high performance optimisation 
+      service:
+        name: irqbalance
+        state: stopped
 
-# $ ifconfig ens160 down    # Disable NIC. TODO: How to do this in Ansible? Necessary?
-# $ ethtool -L eth1 combined 16   # Change the number of RSS queues.
-# $ ethtool -K eth1 rxhash on    # Enable receive hashing offload
-# $ ethtool -K eth1 ntuple on   # Enable Rx ntuple filters and actions
-# $ ifconfig ens160 up    # Enable NIC
-# $ ethtool -X ens160 hkey 6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A equal 16   # Make RSS symmetric
-# $ ethtool -A ens160 rx off    # Disable RX pause. TODO: tx off?
-# $ ethtool -C ens160 adaptive-rx off adaptive-tx off rx-usecs 125    # Changes the coalescing settings. Adaptive control is disabled for lowest possible latency. Setting rx-usecs to 125 will limit interrupts to about 8000 interrupts per second per queue.
-# $ ethtool -G eth1 rx 1024   # Changes the number of ring entries for the Rx ring. TODO: test
-# $ ethtool -X eth1 hfunc toeplitz    # Make sure the RSS hash function is Toeplitz.
+    - name: Configure NIC
+      ignore_errors: yes
+      block:
+        # $ ifconfig ens160 down    # Disable NIC. TODO: How to do this in Ansible? Necessary?
 
-# Let the NIC balance as much as possible: TODO: test
-# for proto in tcp4 udp4 tcp6 udp6; do
-#    ethtool -N eth1 rx-flow-hash $proto sdfn (or 'sd')
-# done
+        - name: Change the number of RSS queues
+          command: "ethtool -L {{mgmt_nic}} combined 1"
+
+        - name: Enable receive hashing offload
+          command: "ethtool -K {{mgmt_nic}} rxhash on"
+
+        - name: Enable Rx ntuple filters and actions
+          command: "ethtool -K {{mgmt_nic}} ntuple on"
+
+        # $ ifconfig ens160 up    # Enable NIC. TODO: Necessary?
+
+        - name: Make RSS symmetric
+          command: "ethtool -X {{mgmt_nic}} hkey 6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A equal 16"
+
+        - name: Disable RX pause. # TODO: tx off?
+          command: "ethtool -A {{mgmt_nic}} rx off"
+
+        - name: Adaptive control is disabled for lowest possible latency
+          command: "ethtool -C {{mgmt_nic}} adaptive-rx off adaptive-tx off rx-usecs 125"
+
+        - name: Changes the number of ring entries for the Rx ring. # TODO: test
+          command: "ethtool -G {{mgmt_nic}} rx 1024"
+
+        - name: Make sure the RSS hash function is Toeplitz.
+          command: "ethtool -X {{mgmt_nic}} hfunc toeplitz"
+
+        - name: Let the NIC balance as much as possible # TODO: test sdfn vs sd
+          shell: |
+            for proto in tcp4 udp4 tcp6 udp6; do
+              ethtool -N {{mgmt_nic}} rx-flow-hash $proto sdfn
+            done
 
     - name: Configure suricata  
       template:  
