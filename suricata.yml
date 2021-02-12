@@ -42,14 +42,35 @@
       package:
         name:
           - suricata # IDS
-          - jq  # Command-line JSON processor.
+          - jq  # Command-line JSON processor
           - ethtool # Query or control network driver and hardware settings
         state: latest
+
+# Allow CPU cores to be isolated for use of general system processes. That way ensures total dedication of those CPUs/ranges for the Suricata process only.
+# isolcpus=1-17,19-35,37-53,55-71 
 
     - name: Add the i40e module # Intel drivers
       community.general.modprobe:
         name: i40e
         state: present
+
+# $ service irqbalance stop   # When doing high performance optimisation make sure irqbalance is off and not running
+
+# $ ifconfig ens160 down    # Disable NIC. TODO: How to do this in Ansible? Necessary?
+# $ ethtool -L eth1 combined 16   # Change the number of RSS queues.
+# $ ethtool -K eth1 rxhash on    # Enable receive hashing offload
+# $ ethtool -K eth1 ntuple on   # Enable Rx ntuple filters and actions
+# $ ifconfig ens160 up    # Enable NIC
+# $ ethtool -X ens160 hkey 6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A equal 16   # Make RSS symmetric
+# $ ethtool -A ens160 rx off    # Disable RX pause. TODO: tx off?
+# $ ethtool -C ens160 adaptive-rx off adaptive-tx off rx-usecs 125    # Changes the coalescing settings. Adaptive control is disabled for lowest possible latency. Setting rx-usecs to 125 will limit interrupts to about 8000 interrupts per second per queue.
+# $ ethtool -G eth1 rx 1024   # Changes the number of ring entries for the Rx ring. TODO: test
+# $ ethtool -X eth1 hfunc toeplitz    # Make sure the RSS hash function is Toeplitz.
+
+# Let the NIC balance as much as possible: TODO: test
+# for proto in tcp4 udp4 tcp6 udp6; do
+#    ethtool -N eth1 rx-flow-hash $proto sdfn (or 'sd')
+# done
 
     - name: Configure suricata  
       template:  
