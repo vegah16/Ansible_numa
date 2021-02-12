@@ -11,10 +11,11 @@ Ansible playbook for master's thesis.
 username@ip
 ```
 
-4. Install Ansible dependencies:
+4. Install Ansible dependencies (Custom modules are added to env):
 
 ```
 $ ansible-galaxy collection install community.general
+$ export ANSIBLE_LIBRARY=$PWD/modules
 ```
 
 ## Execute playbook

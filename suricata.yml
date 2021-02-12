@@ -12,6 +12,7 @@
     afpacket_tpacketv3: "yes"
     afpacket_ringsize: 100000
     afpacket_blocksize: 1048576
+
     threading_management_cpu: 0
     threading_receive_cpu: "0-1"
     threading_worker_cpu: 1
@@ -19,6 +20,10 @@
     threading_worker_prio_medium: 1
     threading_worker_prio_high: 1
     threading_worker_prio_default: "high"
+
+    max_pending_packets: 65500 # Default is 1024
+    runmode: "workers" # default is autofp
+    default_packet_size: 9000 # see 'maxmtu' result when $ ip -d link list
     
   tasks:
 
@@ -46,8 +51,14 @@
           - ethtool # Query or control network driver and hardware settings
         state: latest
 
-# Allow CPU cores to be isolated for use of general system processes. That way ensures total dedication of those CPUs/ranges for the Suricata process only.
-# isolcpus=1-17,19-35,37-53,55-71 
+    - name: Isolate CPU cores from general system processes
+      replace:
+        path: /etc/default/grub
+        regexp: '^(GRUB_CMDLINE_LINUX_DEFAULT=(?:(?![" ]{{ option | regex_escape }}=).)*)(?:[" ]{{ option | regex_escape }}=\S+)?(.*")$'
+        replace: '\1 {{ option }}={{ value }}\2'
+      vars:
+        option: isolcpus
+        value: 1
 
     - name: Add the i40e module # Intel drivers
       community.general.modprobe:
