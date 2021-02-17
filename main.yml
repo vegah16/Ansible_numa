@@ -3,7 +3,7 @@
   hosts: ubuntu # Group in ansible hosts file.
   become: yes # Become root.
   vars:
-    mgmt_nic: "{{ansible_default_ipv4.interface}}"
+    mgmt_nic: "eno1"
 
     afpacket_interface: "{{mgmt_nic}}"
     afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
