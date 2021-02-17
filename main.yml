@@ -30,11 +30,11 @@
   tasks:
 
     - name: install system updates for centos systems
-      yum: name=* state=latest update_cache=yes
+      yum: name=* state=latest
       when: ansible_distribution == "CentOS"
 
     - name: install system updates for ubuntu systems
-      apt: upgrade=dist update_cache=yes
+      apt: upgrade=dist
       when: ansible_distribution == "Ubuntu"
 
     - name: Set passwordless sudo # To prevent entering the password when ansible executes.
@@ -51,21 +51,35 @@
           - suricata # IDS
           - jq  # Command-line JSON processor
           - ethtool # Query or control network driver and hardware settings
+          - build-essential # For compiling Intel driver
         state: latest
 
-    - name: Isolate CPU cores from general system processes
-      replace:
-        path: /etc/default/grub
-        regexp: '^(GRUB_CMDLINE_LINUX_DEFAULT=(?:(?![" ]{{ option | regex_escape }}=).)*)(?:[" ]{{ option | regex_escape }}=\S+)?(.*")$'
-        replace: '\1 {{ option }}={{ value }}\2'
-      vars:
-        option: isolcpus
-        value: 1
+    - name: Install Intel i40e kernel module
+      block:
+        - name: Make sure directory exists
+          file:
+            path: /opt/i40e
+            state: directory
 
-    - name: Add the i40e module # Intel drivers
-      community.general.modprobe:
-        name: i40e
-        state: present
+        - name: Download and unarchive makefile from source
+          unarchive:
+            src: https://sourceforge.net/projects/e1000/files/i40e%20stable/2.14.13/i40e-2.14.13.tar.gz
+            dest: /opt/i40e/
+            remote_src: yes
+            creates: i40e-2.14.13
+
+        - name: Compile driver
+          community.general.make:
+            chdir: /opt/i40e/i40e-2.14.13/src
+            target: install
+
+        - name: Add the i40e module
+          community.general.modprobe:
+            name: i40e
+            state: present
+
+    - name: Set irq affinity
+      command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity local {{mgmt_nic}}"
 
     - name: Stop irqbalance for high performance optimisation 
       service:
@@ -75,7 +89,6 @@
     - name: Configure NIC
       ignore_errors: yes
       block:
-        # $ ifconfig ens160 down    # Disable NIC. TODO: How to do this in Ansible? Necessary?
 
         - name: Change the number of RSS queues
           command: "ethtool -L {{mgmt_nic}} combined 1"
@@ -85,8 +98,6 @@
 
         - name: Enable Rx ntuple filters and actions
           command: "ethtool -K {{mgmt_nic}} ntuple on"
-
-        # $ ifconfig ens160 up    # Enable NIC. TODO: Necessary?
 
         - name: Make RSS symmetric
           command: "ethtool -X {{mgmt_nic}} hkey 6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A equal 16"

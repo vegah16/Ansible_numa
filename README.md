@@ -15,7 +15,6 @@ username@ip
 
 ```
 $ ansible-galaxy collection install community.general
-$ export ANSIBLE_LIBRARY=$PWD/modules
 ```
 
 ## Execute playbook
