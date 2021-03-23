@@ -1,4 +1,3 @@
-{% raw %}
 %YAML 1.1
 ---
 
@@ -308,7 +307,9 @@ outputs:
       append: yes
       #extended: yes     # enable this for extended logging information
       #custom: yes       # enable the custom logging format (defined by customformat)
+{% raw %}
       #customformat: "%{%D-%H:%M:%S}t.%z %{X-Forwarded-For}i %H %m %h %u %s %B %a:%p -> %A:%P"
+{% endraw %}
       #filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
 
   # a line based log of TLS handshake parameters (no alerts)
@@ -318,7 +319,9 @@ outputs:
       append: yes
       #extended: yes     # Log extended information like fingerprint
       #custom: yes       # enabled the custom logging format (defined by customformat)
+{% raw %}
       #customformat: "%{%D-%H:%M:%S}t.%z %a:%p -> %A:%P %v %n %d %D"
+{% endraw %}
       #filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
       # output TLS transaction where the session is resumed using a
       # session id
@@ -576,7 +579,6 @@ logging:
 ## See "Advanced Capture Options" below for more options, including Netmap
 ## and PF_RING.
 ##
-{% endraw %}
 
 # Linux high speed capture support
 af-packet:
@@ -658,7 +660,6 @@ af-packet:
     #use-mmap: no
     #tpacket-v3: yes
 
-{% raw %}
 # Cross platform libpcap capture support
 pcap:
   - interface: eth0
@@ -1033,7 +1034,6 @@ coredump:
 # This feature is currently only used by the reject* keywords.
 host-mode: auto
 
-{% endraw %}
 # Number of packets preallocated per thread. The default is 1024. A higher number 
 # will make sure each CPU will be more easily kept busy, but may negatively 
 # impact caching.
@@ -1058,7 +1058,6 @@ runmode: {{runmode}}
 # packet size (MTU + hardware header) on your system.
 default-packet-size: {{default_packet_size}}
 
-{% raw %}
 # Unix command socket that can be used to pass commands to Suricata.
 # An external tool can then connect to get information from Suricata
 # or trigger some modifications of the engine. Set enabled to yes
@@ -1452,7 +1451,6 @@ mpm-algo: auto
 # The default of "auto" will use "hs" if available, otherwise "bm".
 
 spm-algo: auto
-{% endraw %}
 
 # Suricata is multi-threaded. Here the threading can be influenced.
 threading:
@@ -1480,10 +1478,10 @@ threading:
         # detect-thread-ratio variable:
         # threads: 3
         prio:
-          low: [{{threading_worker_prio_low}}] # default: 0
-          medium: ["{{threading_worker_prio_medium}}"] # default: "1-2"
-          high: [{{threading_worker_prio_high}}] # default: 3
-          default: "{{threading_worker_prio_default}}" # default: "medium"
+          low: [{{threading_worker_prio_low}}]
+          medium: [{{threading_worker_prio_medium}}]
+          high: [{{threading_worker_prio_high}}]
+          default: "{{threading_worker_prio_default}}"
     #- verdict-cpu-set:
     #    cpu: [ 0 ]
     #    prio:
@@ -1499,7 +1497,6 @@ threading:
   #
   detect-thread-ratio: 1.0
 
-{% raw %}
 # Luajit has a strange memory requirement, its 'states' need to be in the
 # first 2G of the process' memory.
 #
@@ -1887,4 +1884,3 @@ reference-config-file: /etc/suricata/reference.config
 # You can specify more than 2 configuration files, if needed.
 #include: include1.yaml
 #include: include2.yaml
-{% endraw %}

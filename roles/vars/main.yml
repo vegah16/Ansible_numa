@@ -1,0 +1,27 @@
+monitor_if: "{{MONITOR_IF}}"
+
+afpacket_interface: "{{monitor_if}}"
+afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
+afpacket_clustertype: "cluster_flow"
+afpacket_defrag: "no"
+afpacket_usemmap: "yes"
+afpacket_mmaplocked: "yes"
+afpacket_tpacketv3: "yes"
+afpacket_ringsize: 100000
+afpacket_blocksize: 1048576
+
+threading_management_cpu: "0-5" # TODO: generalize for NUMA node 0
+threading_receive_cpu: "0-5" # TODO: generalize for NUMA node 0
+threading_worker_cpu: "6-11" # TODO: generalize for NUMA node 1
+threading_worker_prio_low:
+threading_worker_prio_medium: "0-5" # TODO: generalize for NUMA node 0
+threading_worker_prio_high: "6-11" # TODO: generalize for NUMA node 1
+threading_worker_prio_default: "high"
+
+max_pending_packets: 65500 # Default is 1024
+runmode: "workers" # default is autofp
+default_packet_size: 9000 # see 'maxmtu' result when $ ip -d link list
+
+
+# Stats
+counters: "tcp.reassembly_memuse" # Comma separated

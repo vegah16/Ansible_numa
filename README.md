@@ -18,14 +18,6 @@ $ ansible-galaxy collection install community.general
 ```
 
 ## Execute playbook
-For now, when running the playbook for the first time, you have to use the option "-K" so that you can enter the root password. After this, the playbook can run without entering the password.
+Run the playbook dev-sensors.yml with the role suricata-numa on our current test sensor 04700132.
 
-**TODO: improve this?**
-
-**Initial execution**
-
-    ansible-playbook suricata.yml -K
-
-**Subsequent executions**
-  
-    ansible-playbook suricata.yml
+    ansible-playbook dev-sensors.yml --tags "suricata-numa" -l 04700132.ts

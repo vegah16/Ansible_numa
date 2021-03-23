@@ -1,0 +1,17 @@
+- name: Restart suricata
+  service:
+    name: suricata
+    state: restarted
+    enabled: yes
+
+- name: Install i40e
+  block:
+    - name: Compile driver
+      community.general.make:
+        chdir: /opt/i40e/i40e-2.14.13/src
+        target: install
+
+    - name: Add the i40e module
+      community.general.modprobe:
+        name: i40e
+        state: present

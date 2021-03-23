@@ -1,0 +1,111 @@
+---
+# - name: Setup Suricata
+#   hosts: ubuntu # Group in ansible hosts file.
+#   become: yes # Become root.
+ 
+# - name: install system updates for centos systems
+#   yum: name=* state=latest
+#   when: ansible_distribution == "CentOS"
+
+# - name: install system updates for ubuntu systems
+#   apt: upgrade=dist
+#   when: ansible_distribution == "Ubuntu"
+
+# - name: Set passwordless sudo # To prevent entering the password when ansible executes.
+#   lineinfile:
+#     path: /etc/sudoers
+#     state: present
+#     regexp: '^%sudo'
+#     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+#     validate: 'visudo -cf %s'
+  
+- name: Install packages
+  package:
+    name:
+      - suricata # IDS
+      - jq  # Command-line JSON processor
+      - ethtool # Query or control network driver and hardware settings
+      - build-essential # For compiling Intel driver
+      - linux-tools-common # Installing Perf for testing
+    state: latest
+  notify: 
+    - Restart suricata
+
+- name: Install Intel i40e kernel module
+  block:
+    - name: Make sure directory exists
+      file:
+        path: /opt/i40e
+        state: directory
+      notify:
+        - Install i40e
+
+    - name: Unarchive driver stored locally
+      unarchive:
+        src: ../files/i40e-2.14.13.tar.gz
+        dest: /opt/i40e/
+        creates: i40e-2.14.13
+
+- name: Set irq affinity
+  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity 0-5 {{monitor_if}}" # TODO: For "0-5", generalize for NUMA node 0.
+
+- name: Stop irqbalance for high performance optimisation 
+  service:
+    name: irqbalance
+    state: stopped
+
+- name: Set irq affinity
+  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity 0-5 {{monitor_if}}" # TODO: For "0-5", generalize for NUMA node 0.
+
+- name: Configure NIC
+  ignore_errors: yes
+  block:
+    - name: Change the number of RSS queues
+      command: "ethtool -L {{monitor_if}} combined 1"
+
+    - name: Enable receive hashing offload
+      command: "ethtool -K {{monitor_if}} rxhash on"
+
+    - name: Enable Rx ntuple filters and actions
+      command: "ethtool -K {{monitor_if}} ntuple on"
+
+    - name: Disable RX pause.
+      command: "ethtool -A {{monitor_if}} rx off"
+
+    - name: Adaptive control is disabled for lowest possible latency
+      command: "ethtool -C {{monitor_if}} adaptive-rx off adaptive-tx off rx-usecs 125" # TODO: test e.g. 150
+
+    - name: Changes the number of ring entries for the Rx ring. # TODO: test
+      command: "ethtool -G {{monitor_if}} rx 1024" # buffer størrelse, finnes en maks størrelse men kan teste med mindre
+
+    - name: Make sure the RSS hash function is Toeplitz.
+      command: "ethtool -X {{monitor_if}} hfunc toeplitz"
+
+    - name: Let the NIC balance as much as possible # TODO: test sdfn vs sd
+      shell: |
+        for proto in tcp4 udp4 tcp6 udp6; do
+          ethtool -N {{monitor_if}} rx-flow-hash $proto sdfn
+        done
+
+- name: Configure suricata  
+  template:  
+    src: suricata.yaml.j2  
+    dest: /etc/suricata/suricata.yaml  
+  notify: 
+    - Restart suricata
+
+- name: Update signatures
+  command: suricata-update
+  notify: 
+    - Restart suricata
+
+- name: Fetch suricata plot
+  block:
+    - name: Generate plot
+      command: "suri-stats -p -c {{counters}} -S -o /tmp/out.png /var/log/suricata/stats.log"
+
+    - name: Fetch file to SM1
+      fetch:
+        src: /tmp/out.png
+        dest: roles/suricata-numa/files/plots/{{ansible_date_time.iso8601}}.png
+        flat: yes
