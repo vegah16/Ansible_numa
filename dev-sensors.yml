@@ -1,9 +1,0 @@
----
-- name: Development sensor roles
-  hosts: all
-  roles:
-     - { role: suricata, tags: "suricata" }
-     - { role: nifi, tags: "nifi" }
-     - { role: flow2portal, tags: "flow2portal" }
-     - { role: pcap-api, tags: "pcap-api" }
-     - { role: suricata-numa, tags: "suricata-numa" }

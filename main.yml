@@ -1,0 +1,6 @@
+---
+- name: Main playbook
+  hosts: ubuntu
+  become: yes
+  roles:
+     - workers-node1

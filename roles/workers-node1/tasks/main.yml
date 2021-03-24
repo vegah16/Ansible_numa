@@ -11,13 +11,13 @@
 #   apt: upgrade=dist
 #   when: ansible_distribution == "Ubuntu"
 
-# - name: Set passwordless sudo # To prevent entering the password when ansible executes.
-#   lineinfile:
-#     path: /etc/sudoers
-#     state: present
-#     regexp: '^%sudo'
-#     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
-#     validate: 'visudo -cf %s'
+- name: Set passwordless sudo # To prevent entering the password when ansible executes.
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
   
 - name: Install packages
   package:
@@ -28,8 +28,6 @@
       - build-essential # For compiling Intel driver
       - linux-tools-common # Installing Perf for testing
     state: latest
-  notify: 
-    - Restart suricata
 
 - name: Install Intel i40e kernel module
   block:
@@ -46,22 +44,19 @@
         dest: /opt/i40e/
         creates: i40e-2.14.13
 
-- name: Set irq affinity
-  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity 0-5 {{monitor_if}}" # TODO: For "0-5", generalize for NUMA node 0.
-
 - name: Stop irqbalance for high performance optimisation 
   service:
     name: irqbalance
     state: stopped
 
 - name: Set irq affinity
-  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity 0-5 {{monitor_if}}" # TODO: For "0-5", generalize for NUMA node 0.
+  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity local {{monitor_if}}" # "local" means NUMA 0.
 
 - name: Configure NIC
   ignore_errors: yes
   block:
     - name: Change the number of RSS queues
-      command: "ethtool -L {{monitor_if}} combined 1"
+      command: "ethtool -L {{monitor_if}} combined {{afpacket_threads * 2}}"
 
     - name: Enable receive hashing offload
       command: "ethtool -K {{monitor_if}} rxhash on"
@@ -69,8 +64,11 @@
     - name: Enable Rx ntuple filters and actions
       command: "ethtool -K {{monitor_if}} ntuple on"
 
-    - name: Disable RX pause.
-      command: "ethtool -A {{monitor_if}} rx off"
+    - name: Allow symmetric hashing by using low entropy toeplitz key
+      command: "ethtool -X {{monitor_if}} hkey 6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A equal {{afpacket_threads * 2}}"
+
+    - name: Disable RX/TX pause.
+      command: "ethtool -A {{monitor_if}} rx off tx off"
 
     - name: Adaptive control is disabled for lowest possible latency
       command: "ethtool -C {{monitor_if}} adaptive-rx off adaptive-tx off rx-usecs 125" # TODO: test e.g. 150
@@ -107,5 +105,5 @@
     - name: Fetch file to SM1
       fetch:
         src: /tmp/out.png
-        dest: roles/suricata-numa/files/plots/{{ansible_date_time.iso8601}}.png
+        dest: plots/{{ansible_date_time.iso8601}}.png
         flat: yes
