@@ -1540,8 +1540,8 @@ threading:
   cpu-affinity:
     - management-cpu-set:
         cpu: [{{threading_management_cpu}}]  # include only these CPUs in affinity settings
-    - receive-cpu-set:
-        cpu: [{{threading_receive_cpu}}]  # include only these CPUs in affinity settings
+    # - receive-cpu-set:
+    #     cpu: [{{threading_receive_cpu}}]  # include only these CPUs in affinity settings
     - worker-cpu-set:
         cpu: [{{threading_worker_cpu}}]
         mode: "exclusive"

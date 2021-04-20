@@ -3,4 +3,6 @@
   hosts: ubuntu
   become: yes
   roles:
-     - workers-node1
+    - role: common
+      vars:
+        message: "first"

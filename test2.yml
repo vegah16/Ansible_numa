@@ -1,0 +1,18 @@
+# SETUP 2
+# NIC is on NUMA 0. What happens if we run on NUMA 1, 
+# leaving the first CPU on the NODE for management?
+
+# TODO: isolcpus=17-31,48-63
+---
+- name: Test 2 - NUMA 1
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: common
+      vars:
+        irq_affinity_cpu: '"17-31", "48-63"' # Note: not CPU 0
+        threading_management_cpu: '16'
+        threading_worker_cpu: '"17-31", "48-63"'
+        threading_worker_prio_low: ""
+        threading_worker_prio_medium: ""
+        threading_worker_prio_high: ""

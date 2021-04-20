@@ -1,15 +1,4 @@
 ---
-# - name: Setup Suricata
-#   hosts: ubuntu # Group in ansible hosts file.
-#   become: yes # Become root.
- 
-# - name: install system updates for centos systems
-#   yum: name=* state=latest
-#   when: ansible_distribution == "CentOS"
-
-# - name: install system updates for ubuntu systems
-#   apt: upgrade=dist
-#   when: ansible_distribution == "Ubuntu"
 
 - name: Set passwordless sudo # To prevent entering the password when ansible executes.
   lineinfile:
@@ -50,7 +39,7 @@
     state: stopped
 
 - name: Set irq affinity
-  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity local {{monitor_if}}" # "local" means NUMA 0.
+  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity {{irq_affinity_cpu}} {{monitor_if}}" # "local" means NUMA 0.
 
 - name: Configure NIC
   ignore_errors: yes
