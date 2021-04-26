@@ -1,0 +1,51 @@
+---
+
+- name: Testing
+  tags:
+    - test
+  block:
+
+    - name: Create timestamped dir for storing results
+      file:
+        path: "results/{{test_name}}/{{ansible_date_time.date}}"
+        state: directory
+        mode: "0755"
+      register: newdir_res # Use this fact to store results in the right dir.
+      delegate_to: localhost
+      become: false
+
+    - name: Run perf for cache miss stats
+      command: "perf stat -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches -o /tmp/perf.txt -C 1-15,32-47 sleep {{test_seconds}}" # TODO: cpu var
+      async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.
+      poll: 0 # Don't wait for result
+
+    - name: Pause for testing
+      pause:
+        seconds: "{{test_seconds}}"
+
+    - name: Fetch perf stats
+      fetch:
+        src: /tmp/perf.txt
+        dest: "{{newdir_res.path}}/perf.txt"
+        flat: yes # Override file path name
+
+    - name: Generate suri-stats plot
+      command: "suri-stats -p -c {{counters}} -S -o /tmp/plot.png /var/log/suricata/stats.log"
+
+    - name: Fetch plot
+      fetch:
+        src: /tmp/plot.png
+        dest: "{{newdir_res.path}}/plot.png"
+        flat: yes
+
+    - name: Fetch suricata.log
+      fetch:
+        src: /var/log/suricata/suricata.log
+        dest: "{{newdir_res.path}}/suricata.log"
+        flat: yes
+
+    - name: Fetch stats.log
+      fetch:
+        src: /var/log/suricata/stats.log
+        dest: "{{newdir_res.path}}/stats.log"
+        flat: yes

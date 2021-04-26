@@ -4,6 +4,7 @@
 # Hence, Suricata needs to run on the same node.
 # CPU 0 is widely used by many services in Linux. Hence, we never use CPU 0.
 
+# Manual operations
 # TODO: isolcpus=1-15,32-47
 ---
 - name: Test 1 - NUMA 0

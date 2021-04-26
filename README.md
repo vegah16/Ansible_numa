@@ -18,6 +18,13 @@ $ ansible-galaxy collection install community.general
 ```
 
 ## Execute playbook
-Run the playbook dev-sensors.yml with the role suricata-numa on our current test sensor 04700132.
 
-    ansible-playbook dev-sensors.yml --tags "suricata-numa" -l 04700132.ts
+### Configs
+Every yml file in root folder is a specific config. To run test1.yml:
+
+    ansible-playbook test1.yml
+
+### Testing
+In order to run the test run the following playbook:
+
+    ansible-playbook testing.yml
