@@ -20,21 +20,6 @@
       - sysstat # For CPU utilization output
     state: latest
 
-- name: Install Intel i40e kernel module
-  block:
-    - name: Make sure directory exists
-      file:
-        path: /opt/i40e
-        state: directory
-      notify:
-        - Install i40e
-
-    - name: Unarchive driver stored locally
-      unarchive:
-        src: ../files/i40e-2.14.13.tar.gz
-        dest: /opt/i40e/
-        creates: i40e-2.14.13
-
 - name: Stop irqbalance for high performance optimisation 
   service:
     name: irqbalance

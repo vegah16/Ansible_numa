@@ -18,6 +18,9 @@
       - linux-tools-generic # Installing Perf for testing
       - linux-tools-5.4.0-72-generic # Installing Perf for testing
       - sysstat # For CPU utilization output
+      - clang # Needed for XDP
+      - libc6-dev-i386 # Needed for XDP
+        install_recommends: no
     state: latest
 
 - name: Install Intel i40e kernel module
@@ -34,6 +37,18 @@
         src: ../files/i40e-2.14.13.tar.gz
         dest: /opt/i40e/
         creates: i40e-2.14.13
+
+- name: Install libbpf library
+  block: 
+    - name: make sure the directory exists
+      file:
+        path: ~/libbpf
+        state: directory
+      notify:
+        - Install libbpf
+
+- name: ldconfig
+  command: /sbin/ldconfig ## modifiserer ldconfig. Kan hende denne er feil. 
 
 - name: Stop irqbalance for high performance optimisation 
   service:
