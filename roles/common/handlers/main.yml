@@ -1,9 +1,3 @@
-- name: Restart suricata
-  service:
-    name: suricata
-    state: restarted
-    enabled: yes
-
 - name: Install i40e
   block:
     - name: Compile driver

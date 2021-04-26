@@ -62,7 +62,7 @@ stats:
   enabled: yes
   # The interval field (in seconds) controls the interval at
   # which stats are updated in the log.
-  interval: 8
+  interval: 1
   # Add decode events to stats.
   #decoder-events: true
   # Decoder event prefix in stats. Has been 'decoder' before, but that leads
@@ -415,7 +415,7 @@ outputs:
   - stats:
       enabled: yes
       filename: stats.log
-      append: yes       # append to file (yes) or overwrite it (no)
+      append: no        # append to file (yes) or overwrite it (no)
       totals: yes       # stats for all threads merged together
       threads: no       # per thread stats
       #null-values: yes  # print counters that have value 0. Default: no

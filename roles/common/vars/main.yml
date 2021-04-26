@@ -15,6 +15,7 @@ afpacket_blocksize: 1048576
 threading_management_cpu: '0'
 threading_receive_cpu: '"0-10"'
 threading_worker_cpu: '"1-15", "32-47"'
+irq_affinity_cpu: "{{threading_worker_cpu}}"
 threading_worker_prio_low: ""
 threading_worker_prio_medium: ""
 threading_worker_prio_high: ""
@@ -25,5 +26,7 @@ runmode: "workers" # default is autofp
 default_packet_size: 9000 # see 'maxmtu' result when $ ip -d link list
 
 
-# Stats
-counters: "tcp.reassembly_memuse" # Comma separated
+# Testing
+counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+test_seconds: 5 # How long to test.
+test_name: test1 # Which test is it? Remember to change this in each test. Used to make result dir.

@@ -15,7 +15,9 @@
       - jq  # Command-line JSON processor
       - ethtool # Query or control network driver and hardware settings
       - build-essential # For compiling Intel driver
-      - linux-tools-common # Installing Perf for testing
+      - linux-tools-generic # Installing Perf for testing
+      - linux-tools-5.4.0-72-generic # Installing Perf for testing
+      - sysstat # For CPU utilization output
     state: latest
 
 - name: Install Intel i40e kernel module
@@ -77,22 +79,65 @@
 - name: Configure suricata  
   template:  
     src: suricata.yaml.j2  
-    dest: /etc/suricata/suricata.yaml  
-  notify: 
-    - Restart suricata
+    dest: /etc/suricata/suricata.yaml 
 
 - name: Update signatures
   command: suricata-update
-  notify: 
-    - Restart suricata
 
-- name: Fetch suricata plot
+- name: Restart suricata
+  service:
+    name: suricata
+    state: restarted
+    enabled: yes
+
+# ------------------- START TESTING --------------------
+
+- name: Testing
+  tags:
+    - test
   block:
-    - name: Generate plot
-      command: "suri-stats -p -c {{counters}} -S -o /tmp/out.png /var/log/suricata/stats.log"
 
-    - name: Fetch file to SM1
+    - name: Create timestamped dir for storing results
+      file:
+        path: "results/{{test_name}}/{{ansible_date_time.date}}"
+        state: directory
+        mode: "0755"
+      register: newdir_res # Use this fact to store results in the right dir.
+      delegate_to: localhost
+      become: false
+
+    - name: Run perf for cache miss stats
+      command: "perf stat -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches -o /tmp/perf.txt -C 1-15,32-47 sleep {{test_seconds}}" # TODO: cpu var
+      async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.
+      poll: 0 # Don't wait for result
+
+    - name: Pause for testing
+      pause:
+        seconds: "{{test_seconds}}"
+
+    - name: Fetch perf stats
       fetch:
-        src: /tmp/out.png
-        dest: plots/{{ansible_date_time.iso8601}}.png
+        src: /tmp/perf.txt
+        dest: "{{newdir_res.path}}/perf.txt"
+        flat: yes # Override file path name
+
+    - name: Generate suri-stats plot
+      command: "suri-stats -p -c {{counters}} -S -o /tmp/plot.png /var/log/suricata/stats.log"
+
+    - name: Fetch plot
+      fetch:
+        src: /tmp/plot.png
+        dest: "{{newdir_res.path}}/plot.png"
+        flat: yes
+
+    - name: Fetch suricata.log
+      fetch:
+        src: /var/log/suricata/suricata.log
+        dest: "{{newdir_res.path}}/suricata.log"
+        flat: yes
+
+    - name: Fetch stats.log
+      fetch:
+        src: /var/log/suricata/stats.log
+        dest: "{{newdir_res.path}}/stats.log"
         flat: yes
