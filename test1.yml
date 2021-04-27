@@ -13,9 +13,9 @@
   roles:
     - role: common
       vars:
-        irq_affinity_cpu: '"17-31", "48-63"' # Note: not CPU 0
+        test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.
         threading_management_cpu: '16'
-        threading_worker_cpu: '"16-31", "48-63"'
+        threading_worker_cpu: '"17-31", "48-63"'
         threading_worker_prio_low: "" # TODO: Test
         threading_worker_prio_medium: "" # TODO: Test
         threading_worker_prio_high: "" # TODO: Test

@@ -1,6 +1,0 @@
----
-- name: Testing
-  hosts: ubuntu
-  become: yes
-  roles:
-    - role: testing
