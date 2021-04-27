@@ -1,5 +1,5 @@
 # monitor_if: "{{MONITOR_IF}}"
-monitor_if: "eno1" # $ sudo lshw -class network -short
+monitor_if: "ens2f0" # $ sudo lshw -class network -short
 
 afpacket_interface: "{{monitor_if}}"
 # afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
