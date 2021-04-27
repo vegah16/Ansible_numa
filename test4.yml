@@ -6,13 +6,13 @@
 
 # TODO: isolcpus=1-15,32-47
 ---
-- name: Test 1 - NUMA 0
+- name: Test 4 - 
   hosts: ubuntu
   become: yes
   roles:
     - role: common
       vars:
-        irq_affinity_cpu: '"1-15", "32-47"' # Note: not CPU 0
+        test_name: "test4" # Which test is it? Remember to change this in each test. Used to make result dir.
         threading_management_cpu: '0'
         threading_worker_cpu: '"1-15", "32-47"'
         threading_worker_prio_low: "" # TODO: Test

@@ -1,0 +1,10 @@
+# DEFAULT SETUP
+---
+- name: Test 1 - NUMA 0
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: common
+      vars:
+        test_name: "default" # Which test is it? Remember to change this in each test. Used to make result dir.
+        threading_worker_cpu: ''

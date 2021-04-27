@@ -1,3 +1,8 @@
+# Tasks in this file only runs when other tasks notify them.
+
+
+# The Intel i40e driver is installed and added as a kernel module. 
+# Only when the driver is not present.
 - name: Install i40e
   block:
     - name: Compile driver
@@ -9,3 +14,9 @@
       community.general.modprobe:
         name: i40e
         state: present
+
+
+# Reboot is required in order to set the boot parameter from grub.
+# We only reboot when the grub file is modified.
+- name: Reboot to apply isolcpus
+  reboot:

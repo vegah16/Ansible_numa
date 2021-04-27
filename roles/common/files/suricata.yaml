@@ -561,6 +561,7 @@ logging:
       enabled: yes
       level: info
       filename: suricata.log
+      append: no
       # type: json
   - syslog:
       enabled: no

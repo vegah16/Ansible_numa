@@ -1,8 +1,0 @@
----
-- name: Main playbook
-  hosts: ubuntu
-  become: yes
-  roles:
-    - role: common
-      vars:
-        message: "first"
