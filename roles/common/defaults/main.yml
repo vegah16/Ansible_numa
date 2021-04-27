@@ -4,7 +4,7 @@ afpacket_interface: "{{monitor_if}}"
 # afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
 afpacket_threads: 16 # Threads in each CPU group
 afpacket_clustertype: "cluster_qm" # To bind Suricata to RSS queues
-afpacket_defrag: "no"
+afpacket_defrag: "no" # TODO: test yes/no
 afpacket_usemmap: "yes"
 afpacket_mmaplocked: "yes"
 afpacket_tpacketv3: "yes"
