@@ -203,3 +203,10 @@
         src: /var/log/suricata/stats.log
         dest: "{{newdir_res.path}}/stats.log"
         flat: yes # Override file path name
+
+    - name: Dump all variables
+      template:  
+        src: dumpall.j2
+        dest: "{{newdir_res.path}}/dumpall.txt"
+      delegate_to: localhost
+      become: false

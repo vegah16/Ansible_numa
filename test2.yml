@@ -1,18 +1,16 @@
-# SETUP 2
-# NIC is on NUMA 0. What happens if we run on NUMA 1, 
-# leaving the first CPU on the NODE for management?
+# NIC is on NUMA 1. What happens if we run on NUMA 0?
 
-# TODO: isolcpus=17-31,48-63
 ---
-- name: Test 2 - NUMA 1
+- name: Test 2 - NUMA 0
   hosts: ubuntu
   become: yes
   roles:
     - role: common
       vars:
         test_name: "test2" # Which test is it? Remember to change this in each test. Used to make result dir.
-        threading_management_cpu: '16'
-        threading_worker_cpu: '"17-31", "48-63"'
-        threading_worker_prio_low: ""
-        threading_worker_prio_medium: ""
-        threading_worker_prio_high: ""
+        threading_management_cpu: '"0"'
+        threading_worker_cpu: '"1-15", "32-47"'
+
+        # Testing
+        counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        test_seconds: 5 # How long to test.

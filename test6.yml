@@ -1,0 +1,28 @@
+# SETUP 5
+# Various parameter testing.
+
+---
+- name: Test 6 - various parameters
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: common
+      vars:
+        test_name: "test6" # Which test is it? Remember to change this in each test. Used to make result dir.
+        threading_management_cpu: '"16"'
+        threading_worker_cpu: '"17-31", "48-63"'
+
+        afpacket_ringsize: 100000
+        afpacket_blocksize: 1048576
+
+        threading_worker_prio_low: ''
+        threading_worker_prio_medium: '"16"'
+        threading_worker_prio_high: '"17-31", "48-63"'
+        threading_worker_prio_default: "high"
+
+        max_pending_packets: 65500 # Default is 1024
+        default_packet_size: 9000 # see 'maxmtu' result when $ ip -d link list
+
+        # Testing
+        counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        test_seconds: 5 # How long to test.
