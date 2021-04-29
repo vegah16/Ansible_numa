@@ -15,6 +15,7 @@ afpacket_blocksize: 1048576
 threading_management_cpu: '0'
 threading_receive_cpu: '' # This is not used for cluster_qm
 threading_worker_cpu: '"1-15", "32-47"'
+threading_worker_cpu_plain: "{{threading_worker_cpu|regex_replace('[\x20\x22]', '')}}"
 threading_worker_prio_low: ''
 threading_worker_prio_medium: '{{threading_management_cpu}}'
 threading_worker_prio_high: '{{threading_worker_cpu}}'

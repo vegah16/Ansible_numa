@@ -25,3 +25,7 @@ Disable Intel VT-d
 "Disable IOMMU in system BIOS setup by setting “Intel VT-d” to Disabled.  The typical menu entry for this option is:
 Advanced -> Chipset Configuration -> Intel VT-d
 Disable IOMMU in Linux by adding “intel_iommu=off” to the Linux kernel bootup parameter."
+
+
+# Notes
+Suricata bruker 16 tråder for hvert sett med NIC. Må fikse så ikke en CPU har ansvar for 2 workers.

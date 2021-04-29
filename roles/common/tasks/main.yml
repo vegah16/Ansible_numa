@@ -165,21 +165,46 @@
       delegate_to: localhost
       become: false
 
-    - name: Run perf for cache miss stats
-      command: "perf stat -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches -o /tmp/perf.txt -C 1-15,32-47 sleep {{test_seconds}}" # TODO: cpu var
+    # All Linux commands we use for logging stats are stated in the loop parameter.
+    - name: Start commands used for logging stats
+      command: "{{ item }}"
       async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.
       poll: 0 # Don't wait for result
+      register: output
+      loop:
+        # Start mpstat for CPU utilization log
+        - "mpstat -P {{threading_worker_cpu_plain}} -N 1 10 {{(test_seconds / 10) | int}}"
+        # Start mpstat for CPU interrupts log
+        - "mpstat -P {{threading_worker_cpu_plain}} -I SCPU -I SUM 10 {{(test_seconds / 10) | int}}"
+        # Start perf for cache miss stats. PS: --log-fd 1 means to output to stdout and not stderr.
+        - "perf stat --log-fd 1 -I 10000 -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches -C {{threading_worker_cpu_plain}} sleep {{test_seconds}}"
+        # Start pidstat for monitoring Suricata tasks
+        - "pidstat -tuw -C 'Suricata|{{monitor_if}}|FM#|FR#|CW|CS|US' 10 {{(test_seconds / 10) | int}}"
 
     # Ansible will wait for the set time in order for Suricata to process some data.
     - name: Pause for testing
       pause:
         seconds: "{{test_seconds}}"
 
-    - name: Fetch perf stats
-      fetch:
-        src: /tmp/perf.txt
-        dest: "{{newdir_res.path}}/perf.txt"
-        flat: yes # Override file path name
+    # We have to wait for async tasks to finish in order to get the outputs.
+    - name: Wait for async tasks to finish
+      async_status:
+        jid: "{{ item.ansible_job_id }}"
+      register: output_results
+      until: output_results.finished
+      retries: 100
+      delay: 1
+      with_items: "{{ output.results }}"
+        
+    # All async tasks will create a log file with their command as the name.
+    - name: Fetch command output logs
+      copy:
+        content: "{{item.stdout}}"
+        dest: "{{newdir_res.path}}/{{item.cmd}}.log"
+      delegate_to: localhost
+      become: no
+      with_items: "{{output_results.results}}"
+      no_log: True
 
     # suri-stats is a python module used to generate plots from the stats.log file.
     # The "counters" variable can be changed to plot different stats.
