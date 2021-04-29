@@ -3,3 +3,7 @@ Which persistent modifications have we done to the system? It is a good idea to 
 
 ## BIOS
 
+
+
+# Notes
+Suricata bruker 16 tråder for hvert sett med NIC. Må fikse så ikke en CPU har ansvar for 2 workers.
