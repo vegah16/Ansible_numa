@@ -8,6 +8,9 @@
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   
+  - name: Reboot to set NIC values to default
+  reboot:
+
 - name: Install packages
   package:
     name:
@@ -20,7 +23,7 @@
       - sysstat # For CPU utilization output
     state: latest
 
-- name: Stop irqbalance for high performance optimisation 
+- name: Stops irqbalance for high performance optimisation 
   service:
     name: irqbalance
     state: stopped
@@ -33,12 +36,6 @@
   block:
     - name: Change the number of RSS queues
       command: "ethtool -L 1"
-
-    - name: Let the NIC balance as much as possible # TODO: test sdfn vs sd
-      shell: |
-        for proto in tcp4 udp4 tcp6 udp6; do
-          ethtool -N {{monitor_if}} rx-flow-hash $proto sdfn
-        done
 
 - name: Configure suricata  
   template:  
