@@ -43,6 +43,7 @@
       - linux-tools-generic # Installing Perf for testing
       - linux-tools-5.4.0-72-generic # Installing Perf for testing
       - sysstat # For CPU utilization output
+      - gawk # GNU awk needed to monitor network_softnet_stat
     state: latest
 
 
@@ -68,6 +69,19 @@
     - name: Flush handlers
       meta: flush_handlers
 
+- name: Reload i40e driver to reset NIC counters
+  block:
+    - name: Remove driver
+      community.general.modprobe:
+        name: i40e
+        state: absent
+
+    - name: Add driver
+      community.general.modprobe:
+        name: i40e
+        state: present
+
+
 
 - name: Stop irqbalance for high performance optimisation 
   service:
@@ -87,7 +101,7 @@
   ignore_errors: yes
   block:
     - name: Change the number of RSS queues
-      command: "ethtool -L {{monitor_if}} combined {{afpacket_threads * 2}}"
+      command: "ethtool -L {{monitor_if}} combined {{afpacket_threads}}"
 
     - name: Enable receive hashing offload
       command: "ethtool -K {{monitor_if}} rxhash on"
@@ -167,24 +181,39 @@
 
     # All Linux commands we use for logging stats are stated in the loop parameter.
     - name: Start commands used for logging stats
-      command: "{{ item }}"
+      shell: "{{ item }}"
+      args:
+        executable: /bin/bash
       async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.
       poll: 0 # Don't wait for result
       register: output
       loop:
+
         # Start mpstat for CPU utilization log
-        - "mpstat -P {{threading_worker_cpu_plain}} -N 1 10 {{(test_seconds / 10) | int}}"
+        - "mpstat -P {{threading_worker_cpu_plain}} -N 0 10 {{(test_seconds / 10) | int}}"
+
         # Start mpstat for CPU interrupts log
         - "mpstat -P {{threading_worker_cpu_plain}} -I SCPU -I SUM 10 {{(test_seconds / 10) | int}}"
+
         # Start perf for cache miss stats. PS: --log-fd 1 means to output to stdout and not stderr.
         - "perf stat --log-fd 1 -I 10000 -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches -C {{threading_worker_cpu_plain}} sleep {{test_seconds}}"
+
         # Start pidstat for monitoring Suricata tasks
         - "pidstat -tuw -C 'Suricata|{{monitor_if}}|FM#|FR#|CW|CS|US' 10 {{(test_seconds / 10) | int}}"
+
+        # Start ethtool for monitoring card’s FIFO buffer drops/losses.
+        - "for i in {1..{{(test_seconds / 10) | int}}}; do date; ethtool -S {{monitor_if}} | grep -E 'rx_dropped|rx_missed|rx_packets|errors'; echo ''; sleep 10; done"
 
     # Ansible will wait for the set time in order for Suricata to process some data.
     - name: Pause for testing
       pause:
         seconds: "{{test_seconds}}"
+
+    # Stop Suricata in order to get conclusion stats in suricata.log
+    - name: Stop suricata
+      service:
+        name: suricata
+        state: stopped
 
     # We have to wait for async tasks to finish in order to get the outputs.
     - name: Wait for async tasks to finish
@@ -193,7 +222,7 @@
       register: output_results
       until: output_results.finished
       retries: 100
-      delay: 1
+      delay: 10
       with_items: "{{ output.results }}"
         
     # All async tasks will create a log file with their command as the name.
@@ -228,6 +257,21 @@
         src: /var/log/suricata/stats.log
         dest: "{{newdir_res.path}}/stats.log"
         flat: yes # Override file path name
+
+    # -T for timestamp
+    - name: Log dmesg
+      block:
+
+        - name: Register dmesg
+          command: "dmesg -T"
+          register: dmesg
+        
+        - name: Fetch dmesg
+          copy:
+            content: "{{dmesg.stdout}}"
+            dest: "{{newdir_res.path}}/dmesg.log"
+          delegate_to: localhost
+          become: no
 
     - name: Dump all variables
       template:  

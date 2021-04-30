@@ -13,4 +13,4 @@
         
         # Testing
         counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
-        test_seconds: 5 # How long to test.
+        test_seconds: 10 # How long to test.
