@@ -8,8 +8,21 @@
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   
-- name: Reboot to set NIC values to default
-  reboot:
+- name: Isolate CPUs in grub file
+  block:
+
+    # Add isolcpus boot parameter to grub file. PS: "isolcpus=" key with no value is ok.
+    - name: Modify grub file
+      template:  
+        src: grub.j2
+        dest: /etc/default/grub
+
+    # Required after grub file is modified.
+    - name: Update grub
+      command: update-grub
+
+#- name: Reboot to set NIC values to default
+#  reboot:
 
 - name: Install packages
   package:
@@ -29,13 +42,13 @@
     state: stopped
 
 - name: Set irq affinity
-  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity {{irq_affinity_cpu}} {{monitor_if}}" # "local" means NUMA 0.
+  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity 1 {{monitor_if}}" # "local" means NUMA 0.
 
 - name: Configure NIC
   ignore_errors: yes
   block:
     - name: Change the number of RSS queues
-      command: "ethtool -L 1"
+      command: "ethtool -L {{monitor_if}} combined 1"
 
 - name: Configure suricata  
   template:  
