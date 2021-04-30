@@ -21,8 +21,8 @@
     - name: Update grub
       command: update-grub
 
-#- name: Reboot to set NIC values to default
-#  reboot:
+- name: Reboot to set NIC values to default
+  reboot:
 
 - name: Install packages
   package:
