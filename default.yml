@@ -4,7 +4,10 @@
   hosts: ubuntu
   become: yes
   roles:
-    - role: common
+    - role: default
       vars:
         test_name: "default" # Which test is it? Remember to change this in each test. Used to make result dir.
-        threading_worker_cpu: ''
+
+        # Testing
+        counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        test_seconds: 180 # How long to test.

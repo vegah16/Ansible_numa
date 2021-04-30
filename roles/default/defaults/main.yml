@@ -1,0 +1,8 @@
+# monitor_if: "{{MONITOR_IF}}"
+monitor_if: "ens2f0" # $ sudo lshw -class network -short
+
+afpacket_interface: "{{monitor_if}}"
+# afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
+# afpacket_threads: auto # Threads in each CPU group
+afpacket_clustertype: "cluster_flow" # To bind Suricata to RSS queues
+afpacket_defrag: "yes" # TODO: test yes/no
