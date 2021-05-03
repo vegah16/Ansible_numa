@@ -55,14 +55,14 @@ vars:
 # The default logging directory.  Any log or output file will be
 # placed here if it's not specified with a full path name. This can be
 # overridden with the -l command line parameter.
-default-log-dir: @e_logdir@
+default-log-dir: /var/log/suricata/
 
 # Global stats configuration
 stats:
   enabled: yes
   # The interval field (in seconds) controls the interval at
   # which stats are updated in the log.
-  interval: 8
+  interval: 1
   # Add decode events to stats.
   #decoder-events: true
   # Decoder event prefix in stats. Has been 'decoder' before, but that leads
@@ -77,12 +77,12 @@ outputs:
   - fast:
       enabled: yes
       filename: fast.log
-      append: yes
+      append: no
       #filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
 
   # Extensible Event Format (nicknamed EVE) event log in JSON format
   - eve-log:
-      enabled: @e_enable_evelog@
+      enabled: yes
       filetype: regular #regular|syslog|unix_dgram|unix_stream|redis
       filename: eve.json
       # Enable for multi-threaded eve.json output; output files are amended with
@@ -307,7 +307,9 @@ outputs:
       append: yes
       #extended: yes     # enable this for extended logging information
       #custom: yes       # enable the custom logging format (defined by customformat)
+{% raw %}
       #customformat: "%{%D-%H:%M:%S}t.%z %{X-Forwarded-For}i %H %m %h %u %s %B %a:%p -> %A:%P"
+{% endraw %}
       #filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
 
   # a line based log of TLS handshake parameters (no alerts)
@@ -317,7 +319,9 @@ outputs:
       append: yes
       #extended: yes     # Log extended information like fingerprint
       #custom: yes       # enabled the custom logging format (defined by customformat)
+{% raw %}
       #customformat: "%{%D-%H:%M:%S}t.%z %a:%p -> %A:%P %v %n %d %D"
+{% endraw %}
       #filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
       # output TLS transaction where the session is resumed using a
       # session id
@@ -411,7 +415,7 @@ outputs:
   - stats:
       enabled: yes
       filename: stats.log
-      append: yes       # append to file (yes) or overwrite it (no)
+      append: no        # append to file (yes) or overwrite it (no)
       totals: yes       # stats for all threads merged together
       threads: no       # per thread stats
       #null-values: yes  # print counters that have value 0. Default: no
@@ -561,7 +565,6 @@ logging:
       enabled: yes
       level: info
       filename: suricata.log
-      append: no
       # type: json
   - syslog:
       enabled: no
@@ -579,7 +582,7 @@ logging:
 
 # Linux high speed capture support
 af-packet:
-  - interface: eth0
+  - interface: {{afpacket_interface}}
     # Number of receive threads. "auto" uses the number of cores
     #threads: auto
     # Default clusterid. AF_PACKET will load balance packets based on flow.
@@ -1002,7 +1005,7 @@ asn1-max-frames: 256
 # Default location of the pid file. The pid file is only used in
 # daemon mode (start Suricata with -D). If not running in daemon mode
 # the --pidfile command line option must be used to create a pid file.
-#pid-file: @e_rundir@suricata.pid
+#pid-file: /var/run/suricata.pid
 
 # Daemon working directory
 # Suricata will change directory to this one if provided
@@ -1069,7 +1072,7 @@ unix-command:
 
 # Magic file. The extension .mgc is added to the value here.
 #magic-file: /usr/share/file/magic
-@e_magic_file_comment@magic-file: @e_magic_file@
+#magic-file: 
 
 # GeoIP2 database file. Specify path and filename of GeoIP2 database
 # if using rules with "geoip" rule option.
@@ -1091,8 +1094,8 @@ legacy:
 #   - alert
 
 # IP Reputation
-#reputation-categories-file: @e_sysconfdir@iprep/categories.txt
-#default-reputation-path: @e_sysconfdir@iprep
+#reputation-categories-file: /etc/suricata/iprep/categories.txt
+#default-reputation-path: /etc/suricata/iprep
 #reputation-files:
 # - reputation.list
 
@@ -1534,7 +1537,7 @@ profiling:
     limit: 10
 
     # output to json
-    json: @e_enable_evelog@
+    json: yes
 
   # per keyword profiling
   keywords:
@@ -1560,7 +1563,7 @@ profiling:
     # performance impact if compiled in.
     enabled: yes
     filename: packet_stats.log
-    append: yes
+    append: no
 
     # per packet csv output
     csv:
@@ -1862,7 +1865,7 @@ napatech:
 ## Configure Suricata to load Suricata-Update managed rules.
 ##
 
-default-rule-path: @e_defaultruledir@
+default-rule-path: /var/lib/suricata/rules
 
 rule-files:
   - suricata.rules
@@ -1871,9 +1874,9 @@ rule-files:
 ## Auxiliary configuration files.
 ##
 
-classification-file: @e_sysconfdir@classification.config
-reference-config-file: @e_sysconfdir@reference.config
-# threshold-file: @e_sysconfdir@threshold.config
+classification-file: /etc/suricata/classification.config
+reference-config-file: /etc/suricata/reference.config
+# threshold-file: /etc/suricata/threshold.config
 
 ##
 ## Include other configs

@@ -1,6 +1,13 @@
 # monitor_if: "{{MONITOR_IF}}"
 monitor_if: "ens2f0" # $ sudo lshw -class network -short
 
+# Whether configuration should be default or not.
+default: no
+
+# All CPUs in a set, e.g. 0-63
+cpu_set: "0-{{ansible_processor_vcpus - 1}}"
+
+threading_set_cpu_affinity: 'yes'
 threading_management_cpu: '0'
 threading_receive_cpu: '{{threading_management_cpu}}' # This is not used for workers runmode, only autofp. For safe measure, we set equal to mgmt.
 threading_worker_cpu: '"1-15", "33-47"'

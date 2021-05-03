@@ -418,7 +418,7 @@ outputs:
       append: no        # append to file (yes) or overwrite it (no)
       totals: yes       # stats for all threads merged together
       threads: no       # per thread stats
-      # null-values: yes  # print counters that have value 0. Default: no
+      #null-values: yes  # print counters that have value 0. Default: no
 
   # a line based alerts log similar to fast.log into syslog
   - syslog:
@@ -948,8 +948,8 @@ app-layer:
            swf-decompression:
              enabled: yes
              type: both
-             compress-depth: 0
-             decompress-depth: 0
+             compress-depth: 100kb
+             decompress-depth: 100kb
 
            # Use a random value for inspection sizes around the specified value.
            # This lowers the risk of some evasion techniques but could lead
@@ -973,6 +973,8 @@ app-layer:
            # Maximum decompressed size with a compression ratio
            # above 2048 (only LZMA can reach this ratio, deflate cannot)
            #compression-bomb-limit: 1mb
+           # Maximum time spent decompressing a single transaction in usec
+           #decompression-time-limit: 100000
 
          server-config:
 
@@ -1435,6 +1437,9 @@ decoder:
     enabled: true
     ports: $GENEVE_PORTS # syntax: '[6081, 1234]' or '6081'.
 
+  # maximum number of decoder layers for a packet
+  # max-layers: 16
+
 ##
 ## Performance tuning and profiling
 ##
@@ -1526,7 +1531,7 @@ spm-algo: auto
 
 # Suricata is multi-threaded. Here the threading can be influenced.
 threading:
-  set-cpu-affinity: yes
+  set-cpu-affinity: {{threading_set_cpu_affinity}}
   # Tune cpu affinity of threads. Each family of threads can be bound
   # to specific CPUs.
   #

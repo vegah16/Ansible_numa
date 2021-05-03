@@ -18,7 +18,7 @@
         # Ring-size is another af-packet variable that can be considered for tuning
         # and performance benefits. It basically means the buffer size for packets 
         # per thread.
-        # Default : 100000
+        # Default : 2048
         # SEPTun setting : 200000
         # SEPTun 2/redipranha setting : 300000
         afpacket_ringsize: 300000
