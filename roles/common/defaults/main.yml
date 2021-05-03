@@ -1,19 +1,8 @@
 # monitor_if: "{{MONITOR_IF}}"
 monitor_if: "ens2f0" # $ sudo lshw -class network -short
 
-afpacket_interface: "{{monitor_if}}"
-# afpacket_threads: "{{(ansible_processor_vcpus/2) | int}}" # Use half of available threads
-afpacket_threads: 15 # Threads in each CPU group
-afpacket_clustertype: "cluster_qm" # To bind Suricata to RSS queues
-afpacket_defrag: "no" # TODO: test yes/no
-afpacket_usemmap: "yes"
-afpacket_mmaplocked: "yes"
-afpacket_tpacketv3: "yes"
-afpacket_ringsize: 100000
-afpacket_blocksize: 1048576
-
 threading_management_cpu: '0'
-threading_receive_cpu: '' # This is not used for cluster_qm
+threading_receive_cpu: '{{threading_management_cpu}}' # This is not used for workers runmode, only autofp. For safe measure, we set equal to mgmt.
 threading_worker_cpu: '"1-15", "33-47"'
 threading_worker_cpu_plain: "{{threading_worker_cpu|regex_replace('[\x20\x22]', '')}}"
 threading_worker_prio_low: ''
@@ -21,11 +10,24 @@ threading_worker_prio_medium: '{{threading_management_cpu}}'
 threading_worker_prio_high: '{{threading_worker_cpu}}'
 threading_worker_prio_default: "high"
 
+afpacket_interface: "{{monitor_if}}"
+afpacket_threads_1: 15 # Threads in CPU group 1
+afpacket_threads_2: "{{afpacket_threads_1}}" # Threads in CPU group 2
+afpacket_clustertype: "cluster_qm" # To bind Suricata to RSS queues
+afpacket_defrag: "no" # TODO: test yes/no
+afpacket_usemmap: "yes"
+afpacket_mmaplocked: "yes"
+afpacket_tpacketv3: "yes"
+afpacket_ringsize: 300000
+afpacket_blocksize: 2097152
+
+# To deal with high traffic, we set the max-pending-packets to maximum value 65500.
+# Should not need any testing, leave at 65500
 max_pending_packets: 65500 # Default is 1024
+
 runmode: "workers" # default is autofp
-default_packet_size: 9000 # see 'maxmtu' result when $ ip -d link list
 
 # Testing
-counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
-test_seconds: 5 # How long to test.
+counters: "capture.kernel_packets,capture.kernel_drops,tcp.reassembly_gap" # Comma separated. Which counters to plot with suri-stats.
+test_seconds: 300 # How long to test.
 test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.

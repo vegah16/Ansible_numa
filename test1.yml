@@ -1,18 +1,25 @@
 # Follows Suricata 9.5.2.1 https://suricata.readthedocs.io/en/suricata-6.0.0/performance/high-performance-config.html
-# Sniffing NIC is located on NUMA 1.
-# Hence, Suricata needs to run on the same node.
+# NIC os on NUMA 0, so Suricata should run on the same node.
+# Suricata pins 10 CPUs on the other NUMA node for management. We don't want this, but let's test.
+# We always have to leave CPU 0 for the kernel.
 
 ---
-- name: Test 1 - NUMA 1
+- name: Test 1 - NUMA 0 mgmt other node
   hosts: ubuntu
   become: yes
   roles:
     - role: common
       vars:
-        test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.
-        threading_management_cpu: '"16"'
-        threading_worker_cpu: '"17-31", "48-63"'
 
-        # Testing
-        counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
-        test_seconds: 180 # How long to test.
+        test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        threading_management_cpu: '"16-26"'
+        threading_worker_cpu: '"1-15", "48-63"'
+
+        afpacket_threads_1: 15 # Threads in CPU group 1
+        afpacket_threads_2: 16 # Threads in CPU group 2
+
+
+        # Testing (Uncomment to quickly override defaults)
+        # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        # test_seconds: 10 # How long to test.

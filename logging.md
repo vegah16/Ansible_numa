@@ -1,5 +1,15 @@
 # Logging
 
+## stats.log
+These counters are of interest, and can be plotted using suri-stats.
+
+### capture.kernel_packets
+
+### capture.kernel_drops
+
+### tcp.reassembly_gap
+An indicator of kernel drops, as it accounts missing data packets in TCP streams.
+
 ## mpstat for CPU utilization log
 
 ### %usr

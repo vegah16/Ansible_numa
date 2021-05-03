@@ -1,16 +1,22 @@
-# NIC is on NUMA 1. What happens if we run on NUMA 0?
+# NIC is on NUMA 0. What happens if we run on NUMA 1?
+# AKA the opposite of test 1.
+# We can use all 32 CPUs on NUMA node 1 as workers.
 
 ---
-- name: Test 2 - NUMA 0
+- name: Test 2 - NUMA 1 mgmt other node
   hosts: ubuntu
   become: yes
   roles:
     - role: common
       vars:
         test_name: "test2" # Which test is it? Remember to change this in each test. Used to make result dir.
-        threading_management_cpu: '"0"'
-        threading_worker_cpu: '"1-15", "32-47"'
+        threading_management_cpu: '"0-10"'
+        threading_worker_cpu: '"16-31", "48-63"'
 
-        # Testing
-        counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
-        test_seconds: 5 # How long to test.
+        afpacket_threads_1: 16 # Threads in CPU group 1
+        afpacket_threads_2: 16 # Threads in CPU group 2
+
+
+        # Testing (Uncomment to quickly override defaults)
+        # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        # test_seconds: 10 # How long to test.

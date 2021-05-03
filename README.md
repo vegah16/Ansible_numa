@@ -25,9 +25,9 @@ Every yml file in root folder is a specific config. To run test1.yml:
     ansible-playbook test1.yml
 
 ### Testing
-In order to run the test run the following playbook:
+In order to run the test run any playbook with the following tag:
 
-    ansible-playbook testing.yml
+    ansible-playbook test1.yml --tags "testing"
 
 NB: Remember to change the variable `test_name: testX` to the correct test name. Result files will end up in the folder `results/testX`. You can set this var directly by running:
 

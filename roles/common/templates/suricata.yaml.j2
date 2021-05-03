@@ -584,7 +584,7 @@ logging:
 af-packet:
   - interface: {{afpacket_interface}}
     # Number of receive threads. "auto" uses the number of cores
-    threads: {{afpacket_threads}}
+    threads: {{afpacket_threads_1}}
     # Default clusterid. AF_PACKET will load balance packets based on flow.
     cluster-id: 99
     # Default AF_PACKET cluster type. AF_PACKET can load balance per flow or per hash.
@@ -652,10 +652,10 @@ af-packet:
     #copy-iface: eth1
     #  For eBPF and XDP setup including bypass, filter and load balancing, please
     #  see doc/userguide/capture-hardware/ebpf-xdp.rst for more info.
-
+{% if afpacket_threads_2 != 0%}
   - interface: {{afpacket_interface}}
     # Number of receive threads. "auto" uses the number of cores
-    threads: {{afpacket_threads}}
+    threads: {{afpacket_threads_2}}
     # Default clusterid. AF_PACKET will load balance packets based on flow.
     cluster-id: 99
     # Default AF_PACKET cluster type. AF_PACKET can load balance per flow or per hash.
@@ -723,6 +723,7 @@ af-packet:
     #copy-iface: eth1
     #  For eBPF and XDP setup including bypass, filter and load balancing, please
     #  see doc/userguide/capture-hardware/ebpf-xdp.rst for more info.
+{% endif %}
 
   # Put default values here. These will be used for an interface that is not
   # in the list above.
@@ -1127,7 +1128,7 @@ runmode: {{runmode}}
 # Preallocated size for each packet. Default is 1514 which is the classical
 # size for pcap on Ethernet. You should adjust this value to the highest
 # packet size (MTU + hardware header) on your system.
-default-packet-size: {{default_packet_size}}
+# default-packet-size: 1514 # We keep this commented out, so af-packet will use the MTU set on the NIC as a default packet size.
 
 # Unix command socket that can be used to pass commands to Suricata.
 # An external tool can then connect to get information from Suricata
@@ -1540,8 +1541,8 @@ threading:
   cpu-affinity:
     - management-cpu-set:
         cpu: [{{threading_management_cpu}}]  # include only these CPUs in affinity settings
-    # - receive-cpu-set:
-    #     cpu: [{{threading_receive_cpu}}]  # include only these CPUs in affinity settings
+    - receive-cpu-set:
+        cpu: [{{threading_receive_cpu}}]  # include only these CPUs in affinity settings
     - worker-cpu-set:
         cpu: [{{threading_worker_cpu}}]
         mode: "exclusive"
