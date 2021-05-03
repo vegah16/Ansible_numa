@@ -8,6 +8,22 @@
     line: '%sudo ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   
+- name: Isolate CPUs in grub file
+  block:
+
+    # Add isolcpus boot parameter to grub file. PS: "isolcpus=" key with no value is ok.
+    - name: Modify grub file
+      template:  
+        src: grub.j2
+        dest: /etc/default/grub
+
+    # Required after grub file is modified.
+    - name: Update grub
+      command: update-grub
+
+- name: Reboot to set NIC values to default
+  reboot:
+
 - name: Install packages
   package:
     name:
@@ -20,25 +36,19 @@
       - sysstat # For CPU utilization output
     state: latest
 
-- name: Stop irqbalance for high performance optimisation 
+- name: Stops irqbalance for high performance optimisation 
   service:
     name: irqbalance
     state: stopped
 
 - name: Set irq affinity
-  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity {{irq_affinity_cpu}} {{monitor_if}}" # "local" means NUMA 0.
+  command: "/opt/i40e/i40e-2.14.13/scripts/set_irq_affinity 1 {{monitor_if}}" # "local" means NUMA 0.
 
 - name: Configure NIC
   ignore_errors: yes
   block:
     - name: Change the number of RSS queues
-      command: "ethtool -L 1"
-
-    - name: Let the NIC balance as much as possible # TODO: test sdfn vs sd
-      shell: |
-        for proto in tcp4 udp4 tcp6 udp6; do
-          ethtool -N {{monitor_if}} rx-flow-hash $proto sdfn
-        done
+      command: "ethtool -L {{monitor_if}} combined 1"
 
 - name: Configure suricata  
   template:  
@@ -53,3 +63,124 @@
     name: suricata
     state: restarted
     enabled: yes
+
+    # ======================== Testing ======================== #
+
+
+- name: Testing
+  ignore_errors: yes
+  tags:
+    - testing
+  block:
+
+    # Example directory path for test1:
+    # results/test1/2021-04-26T08:53:00Z/
+    - name: Create timestamped dir for storing results
+      file:
+        path: "results/{{test_name}}/{{ansible_date_time.iso8601}}"
+        state: directory
+        mode: "0755"
+      register: newdir_res # Use this fact to store results in the right dir.
+      delegate_to: localhost
+      become: false
+
+    # All Linux commands we use for logging stats are stated in the loop parameter.
+    - name: Start commands used for logging stats
+      shell: "{{ item }}"
+      args:
+        executable: /bin/bash
+      async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.
+      poll: 0 # Don't wait for result
+      register: output
+      loop:
+
+        # Start mpstat for CPU utilization log
+        - "mpstat -P {{threading_worker_cpu_plain}} -N 0 10 {{(test_seconds / 10) | int}}"
+
+        # Start mpstat for CPU interrupts log
+        - "mpstat -P {{threading_worker_cpu_plain}} -I SCPU -I SUM 10 {{(test_seconds / 10) | int}}"
+
+        # Start perf for cache miss stats. PS: --log-fd 1 means to output to stdout and not stderr.
+        - "perf stat --log-fd 1 -I 10000 -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches -C {{threading_worker_cpu_plain}} sleep {{test_seconds}}"
+
+        # Start pidstat for monitoring Suricata tasks
+        - "pidstat -tuw -C 'Suricata|{{monitor_if}}|FM#|FR#|CW|CS|US' 10 {{(test_seconds / 10) | int}}"
+
+        # Start ethtool for monitoring card’s FIFO buffer drops/losses.
+        - "for i in {1..{{(test_seconds / 10) | int}}}; do date; ethtool -S {{monitor_if}} | grep -E 'rx_dropped|rx_missed|rx_packets|errors'; echo ''; sleep 10; done"
+
+    # Ansible will wait for the set time in order for Suricata to process some data.
+    - name: Pause for testing
+      pause:
+        seconds: "{{test_seconds}}"
+
+    # Stop Suricata in order to get conclusion stats in suricata.log
+    - name: Stop suricata
+      service:
+        name: suricata
+        state: stopped
+
+    # We have to wait for async tasks to finish in order to get the outputs.
+    - name: Wait for async tasks to finish
+      async_status:
+        jid: "{{ item.ansible_job_id }}"
+      register: output_results
+      until: output_results.finished
+      retries: 100
+      delay: 10
+      with_items: "{{ output.results }}"
+        
+    # All async tasks will create a log file with their command as the name.
+    - name: Fetch command output logs
+      copy:
+        content: "{{item.stdout}}"
+        dest: "{{newdir_res.path}}/{{item.cmd}}.log"
+      delegate_to: localhost
+      become: no
+      with_items: "{{output_results.results}}"
+      no_log: True
+
+    # suri-stats is a python module used to generate plots from the stats.log file.
+    # The "counters" variable can be changed to plot different stats.
+    - name: Generate suri-stats plot
+      command: "suri-stats -p -c {{counters}} -S -o /tmp/plot.png /var/log/suricata/stats.log"
+
+    - name: Fetch plot
+      fetch:
+        src: /tmp/plot.png
+        dest: "{{newdir_res.path}}/plot.png"
+        flat: yes # Override file path name
+
+    - name: Fetch suricata.log
+      fetch:
+        src: /var/log/suricata/suricata.log
+        dest: "{{newdir_res.path}}/suricata.log"
+        flat: yes # Override file path name
+
+    - name: Fetch stats.log
+      fetch:
+        src: /var/log/suricata/stats.log
+        dest: "{{newdir_res.path}}/stats.log"
+        flat: yes # Override file path name
+
+    # -T for timestamp
+    - name: Log dmesg
+      block:
+
+        - name: Register dmesg
+          command: "dmesg -T"
+          register: dmesg
+        
+        - name: Fetch dmesg
+          copy:
+            content: "{{dmesg.stdout}}"
+            dest: "{{newdir_res.path}}/dmesg.log"
+          delegate_to: localhost
+          become: no
+
+    - name: Dump all variables
+      template:  
+        src: dumpall.j2
+        dest: "{{newdir_res.path}}/dumpall.txt"
+      delegate_to: localhost
+      become: false
