@@ -21,7 +21,7 @@ afpacket_interface: "{{monitor_if}}"
 afpacket_threads_1: 15 # Threads in CPU group 1
 afpacket_threads_2: "{{afpacket_threads_1}}" # Threads in CPU group 2
 afpacket_clustertype: "cluster_qm" # To bind Suricata to RSS queues
-afpacket_defrag: "no" # TODO: test yes/no
+afpacket_defrag: "no" # TODO: test yes/no, trenger kun å teste med beste test?
 afpacket_usemmap: "yes"
 afpacket_mmaplocked: "yes"
 afpacket_tpacketv3: "yes"

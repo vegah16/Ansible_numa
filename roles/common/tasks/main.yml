@@ -105,9 +105,7 @@
   block:
 
     - name: Disable NIC
-      ansible.netcommon.net_interface:
-        name: "{{monitor_if}}"
-        enabled: false
+      command: "ifconfig {{monitor_if}} down"
 
     - name: Change the number of RSS queues
       command: "ethtool -L {{monitor_if}} combined {{(afpacket_threads_1 + afpacket_threads_2) | int}}"
@@ -119,9 +117,7 @@
       command: "ethtool -K {{monitor_if}} ntuple on"
 
     - name: Enable NIC
-      ansible.netcommon.net_interface:
-        name: "{{monitor_if}}"
-        enabled: false
+      command: "ifconfig {{monitor_if}} up"
 
     - name: Allow symmetric hashing by using low entropy toeplitz key
       command: "ethtool -X {{monitor_if}} hkey 6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A:6D:5A equal {{(afpacket_threads_1 + afpacket_threads_2) | int}}"
