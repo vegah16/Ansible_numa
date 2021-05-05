@@ -2,7 +2,7 @@
 Which persistent modifications have we done to the system? It is a good idea to keep track of file modifications, BIOS changes etc. in case a problem arises.
 
 ## Grub
-Edit /boot/grub/grub.conf and add the intel_idle.max_cstate=0 parameter to the kernel
+Edit /etc/default/grub and add the intel_idle.max_cstate=0 parameter to the kernel
 line.
 
 ## BIOS
