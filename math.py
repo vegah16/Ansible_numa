@@ -1,4 +1,3 @@
-import sys
 import os
 
 def percent(num1, num2):
