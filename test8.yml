@@ -1,19 +1,23 @@
-# Various parameter testing.
-# Mgmt on node 1 and workers on node 0.
+# Follows Suricata 9.5.2.1 https://suricata.readthedocs.io/en/suricata-6.0.0/performance/high-performance-config.html
+# NIC os on NUMA 0, so Suricata should run on the same node.
+# Suricata pins 10 CPUs on the other NUMA node for management. We don't want this, but let's test.
+# We always have to leave CPU 0 for the kernel.
 
 ---
-- name: Test 6 - various parameters
+- name: Test 8 - NUMA 0 mgmt other node cpu0 isolated
   hosts: ubuntu
   become: yes
   roles:
     - role: common
       vars:
-        test_name: "test6" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.
+
         threading_management_cpu: '"16-26"'
-        threading_worker_cpu: '"1-15", "32-47"'
-        
-        afpacket_threads_1: 15 # Threads in CPU group 1
-        afpacket_threads_2: 15 # Threads in CPU group 2
+        threading_worker_cpu: '"0-15", "32-47"'
+
+        afpacket_threads_1: 16 # Threads in CPU group 1
+        afpacket_threads_2: 16 # Threads in CPU group 2
 
         # Ring-size is another af-packet variable that can be considered for tuning
         # and performance benefits. It basically means the buffer size for packets 
@@ -27,16 +31,10 @@
         # SEPTun 2/redipranha setting : 2097152
         afpacket_blocksize: 2097152
 
-        threading_worker_prio_low: ''
-        #threading_worker_prio_medium: '"16-26"'
-        #threading_worker_prio_high: '"1-15", "32-47"'
-        #threading_worker_prio_default: "high"
-
         # To deal with high traffic, we set the max-pending-packets to maximum value 65500.
         # Should not need any testing, leave at 65500.
         # Default is 1024
         max_pending_packets: 65500
-
 
         # Testing (Uncomment to quickly override defaults)
         # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
