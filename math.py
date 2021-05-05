@@ -1,4 +1,5 @@
 import sys
+import os
 
 def percent(num1, num2):
     return (num1 / num2)
@@ -6,5 +7,5 @@ def percent(num1, num2):
 num1 = float(input("Enter first number: "))
 num2 = float(input("Enter second number: "))
 
-with open('/home/rof/Ansible_numa/results/percentage.txt', 'w') as f:
+with open(os.path.expanduser("~/Ansible_numa/results/percentage.txt"), 'w') as f:
     print("The packetdrop percentage is", percent(num1, num2)*100, file=f)
