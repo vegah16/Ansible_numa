@@ -1,0 +1,122 @@
+#           time             counts unit events
+    10.009990112        200 095 245      LLC-loads                                                     (74,99%)
+    10.009990112         85 595 889      LLC-load-misses           #   42,78% of all LL-cache hits     (75,01%)
+    10.009990112        105 401 196      LLC-stores                                                    (50,02%)
+    10.009990112    <not supported>      LLC-prefetches                                              
+    20.011222161        999 851 223      LLC-loads                                                     (74,99%)
+    20.011222161        245 499 109      LLC-load-misses           #   40,92% of all LL-cache hits     (75,00%)
+    20.011222161        166 180 800      LLC-stores                                                    (50,01%)
+    20.011222161    <not supported>      LLC-prefetches                                              
+    30.012214367      1 246 333 325      LLC-loads                                                     (74,99%)
+    30.012214367        342 616 309      LLC-load-misses           #   42,02% of all LL-cache hits     (75,00%)
+    30.012214367        171 827 222      LLC-stores                                                    (50,01%)
+    30.012214367    <not supported>      LLC-prefetches                                              
+    40.013314309      1 276 746 613      LLC-loads                                                     (74,99%)
+    40.013314309        326 546 079      LLC-load-misses           #   35,08% of all LL-cache hits     (75,00%)
+    40.013314309        174 929 008      LLC-stores                                                    (50,01%)
+    40.013314309    <not supported>      LLC-prefetches                                              
+    50.014395595      1 298 027 374      LLC-loads                                                     (74,98%)
+    50.014395595        326 229 656      LLC-load-misses           #   32,49% of all LL-cache hits     (75,00%)
+    50.014395595        176 553 118      LLC-stores                                                    (50,01%)
+    50.014395595    <not supported>      LLC-prefetches                                              
+    60.015326853      1 288 503 217      LLC-loads                                                     (74,98%)
+    60.015326853        320 617 619      LLC-load-misses           #   30,49% of all LL-cache hits     (75,00%)
+    60.015326853        176 795 482      LLC-stores                                                    (50,02%)
+    60.015326853    <not supported>      LLC-prefetches                                              
+    70.016263100      1 300 967 309      LLC-loads                                                     (74,98%)
+    70.016263100        322 043 797      LLC-load-misses           #   29,62% of all LL-cache hits     (75,00%)
+    70.016263100        178 933 347      LLC-stores                                                    (50,02%)
+    70.016263100    <not supported>      LLC-prefetches                                              
+    80.017202427      1 304 813 057      LLC-loads                                                     (74,98%)
+    80.017202427        322 710 769      LLC-load-misses           #   28,96% of all LL-cache hits     (75,00%)
+    80.017202427        177 128 778      LLC-stores                                                    (50,02%)
+    80.017202427    <not supported>      LLC-prefetches                                              
+    90.018309705      1 302 867 525      LLC-loads                                                     (74,99%)
+    90.018309705        321 513 022      LLC-load-misses           #   28,32% of all LL-cache hits     (74,99%)
+    90.018309705        176 372 483      LLC-stores                                                    (50,02%)
+    90.018309705    <not supported>      LLC-prefetches                                              
+   100.019574695      1 306 211 262      LLC-loads                                                     (74,99%)
+   100.019574695        324 021 883      LLC-load-misses           #   28,12% of all LL-cache hits     (74,99%)
+   100.019574695        178 201 611      LLC-stores                                                    (50,02%)
+   100.019574695    <not supported>      LLC-prefetches                                              
+   110.020780470      1 302 684 479      LLC-loads                                                     (74,99%)
+   110.020780470        323 873 685      LLC-load-misses           #   27,77% of all LL-cache hits     (74,99%)
+   110.020780470        177 849 862      LLC-stores                                                    (50,02%)
+   110.020780470    <not supported>      LLC-prefetches                                              
+   120.021790823      1 298 120 340      LLC-loads                                                     (74,99%)
+   120.021790823        324 318 173      LLC-load-misses           #   27,55% of all LL-cache hits     (75,00%)
+   120.021790823        177 141 163      LLC-stores                                                    (50,01%)
+   120.021790823    <not supported>      LLC-prefetches                                              
+   130.023038231      1 304 560 323      LLC-loads                                                     (74,99%)
+   130.023038231        326 404 427      LLC-load-misses           #   27,50% of all LL-cache hits     (75,00%)
+   130.023038231        178 549 417      LLC-stores                                                    (50,01%)
+   130.023038231    <not supported>      LLC-prefetches                                              
+   140.024250583      1 308 820 075      LLC-loads                                                     (74,99%)
+   140.024250583        325 346 095      LLC-load-misses           #   27,21% of all LL-cache hits     (75,00%)
+   140.024250583        177 250 143      LLC-stores                                                    (50,01%)
+   140.024250583    <not supported>      LLC-prefetches                                              
+   150.025513530      1 302 631 288      LLC-loads                                                     (74,99%)
+   150.025513530        323 896 760      LLC-load-misses           #   26,93% of all LL-cache hits     (75,00%)
+   150.025513530        176 117 508      LLC-stores                                                    (50,01%)
+   150.025513530    <not supported>      LLC-prefetches                                              
+   160.026634389      1 303 769 407      LLC-loads                                                     (74,99%)
+   160.026634389        324 410 177      LLC-load-misses           #   26,83% of all LL-cache hits     (75,00%)
+   160.026634389        177 763 331      LLC-stores                                                    (50,01%)
+   160.026634389    <not supported>      LLC-prefetches                                              
+   170.027780482      1 300 237 708      LLC-loads                                                     (74,99%)
+   170.027780482        324 622 333      LLC-load-misses           #   26,73% of all LL-cache hits     (75,00%)
+   170.027780482        176 429 092      LLC-stores                                                    (50,01%)
+   170.027780482    <not supported>      LLC-prefetches                                              
+   180.028961850      1 300 239 038      LLC-loads                                                     (74,99%)
+   180.028961850        324 283 495      LLC-load-misses           #   26,60% of all LL-cache hits     (75,00%)
+   180.028961850        176 178 723      LLC-stores                                                    (50,01%)
+   180.028961850    <not supported>      LLC-prefetches                                              
+   190.030109168      1 300 634 328      LLC-loads                                                     (74,98%)
+   190.030109168        324 164 012      LLC-load-misses           #   26,50% of all LL-cache hits     (75,00%)
+   190.030109168        177 149 863      LLC-stores                                                    (50,02%)
+   190.030109168    <not supported>      LLC-prefetches                                              
+   200.031082882      1 296 899 166      LLC-loads                                                     (74,98%)
+   200.031082882        322 870 635      LLC-load-misses           #   26,31% of all LL-cache hits     (75,00%)
+   200.031082882        176 391 026      LLC-stores                                                    (50,02%)
+   200.031082882    <not supported>      LLC-prefetches                                              
+   210.031955989      1 297 081 398      LLC-loads                                                     (74,98%)
+   210.031955989        323 261 109      LLC-load-misses           #   26,27% of all LL-cache hits     (75,00%)
+   210.031955989        176 199 982      LLC-stores                                                    (50,02%)
+   210.031955989    <not supported>      LLC-prefetches                                              
+   220.032874865      1 281 635 714      LLC-loads                                                     (72,38%)
+   220.032874865        326 069 399      LLC-load-misses           #   26,45% of all LL-cache hits     (72,40%)
+   220.032874865        172 958 472      LLC-stores                                                    (55,22%)
+   220.032874865    <not supported>      LLC-prefetches                                              
+   230.033813068      1 212 037 604      LLC-loads                                                     (66,68%)
+   230.033813068        320 256 052      LLC-load-misses           #   26,00% of all LL-cache hits     (66,64%)
+   230.033813068        157 879 128      LLC-stores                                                    (66,67%)
+   230.033813068    <not supported>      LLC-prefetches                                              
+   240.034706011      1 211 494 884      LLC-loads                                                     (66,67%)
+   240.034706011        319 960 805      LLC-load-misses           #   25,99% of all LL-cache hits     (66,68%)
+   240.034706011        157 686 750      LLC-stores                                                    (66,65%)
+   240.034706011    <not supported>      LLC-prefetches                                              
+   250.035597756      1 217 246 277      LLC-loads                                                     (66,66%)
+   250.035597756        321 449 927      LLC-load-misses           #   26,12% of all LL-cache hits     (66,66%)
+   250.035597756        159 361 626      LLC-stores                                                    (66,68%)
+   250.035597756    <not supported>      LLC-prefetches                                              
+#           time             counts unit events
+   260.036460374      1 210 704 168      LLC-loads                                                     (66,68%)
+   260.036460374        320 724 338      LLC-load-misses           #   26,08% of all LL-cache hits     (66,67%)
+   260.036460374        157 759 962      LLC-stores                                                    (66,65%)
+   260.036460374    <not supported>      LLC-prefetches                                              
+   270.037341638      1 211 256 261      LLC-loads                                                     (66,64%)
+   270.037341638        320 591 143      LLC-load-misses           #   26,08% of all LL-cache hits     (66,68%)
+   270.037341638        157 943 157      LLC-stores                                                    (66,68%)
+   270.037341638    <not supported>      LLC-prefetches                                              
+   280.038264783      1 213 434 302      LLC-loads                                                     (66,68%)
+   280.038264783        321 237 719      LLC-load-misses           #   26,15% of all LL-cache hits     (66,65%)
+   280.038264783        158 233 887      LLC-stores                                                    (66,67%)
+   280.038264783    <not supported>      LLC-prefetches                                              
+   290.039179075      1 215 056 281      LLC-loads                                                     (66,66%)
+   290.039179075        320 699 436      LLC-load-misses           #   26,11% of all LL-cache hits     (66,68%)
+   290.039179075        159 084 913      LLC-stores                                                    (66,66%)
+   290.039179075    <not supported>      LLC-prefetches                                              
+   300.001581630      1 211 251 409      LLC-loads                                                     (66,65%)
+   300.001581630        320 452 746      LLC-load-misses           #   26,11% of all LL-cache hits     (66,67%)
+   300.001581630        157 415 129      LLC-stores                                                    (66,67%)
+   300.001581630    <not supported>      LLC-prefetches                                              

@@ -1,0 +1,423 @@
+6/5/2021 -- 12:55:35 - <Notice> - This is Suricata version 6.0.2 RELEASE running in SYSTEM mode
+6/5/2021 -- 12:55:35 - <Info> - CPUs/cores online: 64
+6/5/2021 -- 12:55:35 - <Config> - Adding interface ens2f0 from config file
+6/5/2021 -- 12:55:35 - <Config> - Adding interface ens2f0 from config file
+6/5/2021 -- 12:55:35 - <Config> - luajit states preallocated: 128
+6/5/2021 -- 12:55:35 - <Config> - 'default' server has 'request-body-minimal-inspect-size' set to 31579 and 'request-body-inspect-window' set to 4123 after randomization.
+6/5/2021 -- 12:55:35 - <Config> - 'default' server has 'response-body-minimal-inspect-size' set to 39078 and 'response-body-inspect-window' set to 15766 after randomization.
+6/5/2021 -- 12:55:35 - <Config> - SMB stream depth: 0
+6/5/2021 -- 12:55:35 - <Config> - Protocol detection and parser disabled for modbus protocol.
+6/5/2021 -- 12:55:35 - <Config> - Protocol detection and parser disabled for enip protocol.
+6/5/2021 -- 12:55:35 - <Config> - Protocol detection and parser disabled for DNP3.
+6/5/2021 -- 12:55:35 - <Info> - Found an MTU of 1500 for 'ens2f0'
+6/5/2021 -- 12:55:35 - <Info> - Found an MTU of 1500 for 'ens2f0'
+6/5/2021 -- 12:55:35 - <Info> - Found an MTU of 1500 for 'ens2f0'
+6/5/2021 -- 12:55:35 - <Info> - Found an MTU of 1500 for 'ens2f0'
+6/5/2021 -- 12:55:35 - <Config> - allocated 262144 bytes of memory for the host hash... 4096 buckets of size 64
+6/5/2021 -- 12:55:35 - <Config> - preallocated 1000 hosts of size 136
+6/5/2021 -- 12:55:35 - <Config> - host memory usage: 398144 bytes, maximum: 33554432
+6/5/2021 -- 12:55:35 - <Config> - Core dump size set to unlimited.
+6/5/2021 -- 12:55:35 - <Config> - allocated 3670016 bytes of memory for the defrag hash... 65536 buckets of size 56
+6/5/2021 -- 12:55:35 - <Config> - preallocated 65535 defrag trackers of size 160
+6/5/2021 -- 12:55:35 - <Config> - defrag memory usage: 14155616 bytes, maximum: 33554432
+6/5/2021 -- 12:55:35 - <Config> - flow size 320, memcap allows for 419430 flows. Per hash row in perfect conditions 6
+6/5/2021 -- 12:55:35 - <Config> - stream "prealloc-sessions": 2048 (per thread)
+6/5/2021 -- 12:55:35 - <Config> - stream "memcap": 67108864
+6/5/2021 -- 12:55:35 - <Config> - stream "midstream" session pickups: disabled
+6/5/2021 -- 12:55:35 - <Config> - stream "async-oneside": disabled
+6/5/2021 -- 12:55:35 - <Config> - stream "checksum-validation": enabled
+6/5/2021 -- 12:55:35 - <Config> - stream."inline": disabled
+6/5/2021 -- 12:55:35 - <Config> - stream "bypass": disabled
+6/5/2021 -- 12:55:35 - <Config> - stream "max-synack-queued": 5
+6/5/2021 -- 12:55:35 - <Config> - stream.reassembly "memcap": 268435456
+6/5/2021 -- 12:55:35 - <Config> - stream.reassembly "depth": 1048576
+6/5/2021 -- 12:55:35 - <Config> - stream.reassembly "toserver-chunk-size": 2499
+6/5/2021 -- 12:55:35 - <Config> - stream.reassembly "toclient-chunk-size": 2499
+6/5/2021 -- 12:55:35 - <Config> - stream.reassembly.raw: enabled
+6/5/2021 -- 12:55:35 - <Config> - stream.reassembly "segment-prealloc": 2048
+6/5/2021 -- 12:55:35 - <Info> - fast output device (regular) initialized: fast.log
+6/5/2021 -- 12:55:35 - <Info> - eve-log output device (regular) initialized: eve.json
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'alert'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'anomaly'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'http'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'dns'
+6/5/2021 -- 12:55:35 - <Config> - eve-log dns version not set, defaulting to version 2
+6/5/2021 -- 12:55:35 - <Config> - eve-log dns version not set, defaulting to version 2
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'tls'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'files'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'smtp'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'ftp'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'rdp'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'nfs'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'smb'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'tftp'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'ikev2'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'dcerpc'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'krb5'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'snmp'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'rfb'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'sip'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'dhcp'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'ssh'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'mqtt'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'stats'
+6/5/2021 -- 12:55:35 - <Config> - enabling 'eve-log' module 'flow'
+6/5/2021 -- 12:55:35 - <Info> - stats output device (regular) initialized: stats.log
+6/5/2021 -- 12:55:35 - <Config> - Delayed detect disabled
+6/5/2021 -- 12:55:35 - <Info> - Running in live mode, activating unix socket
+6/5/2021 -- 12:55:35 - <Config> - pattern matchers: MPM: hs, SPM: hs
+6/5/2021 -- 12:55:35 - <Config> - grouping: tcp-whitelist (default) 53, 80, 139, 443, 445, 1433, 3306, 3389, 6666, 6667, 8080
+6/5/2021 -- 12:55:35 - <Config> - grouping: udp-whitelist (default) 53, 135, 5060
+6/5/2021 -- 12:55:35 - <Config> - prefilter engines: MPM
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_uri
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_raw_uri
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_request_line
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_client_body
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_response_line
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_header
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_header
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_header_names
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_header_names
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_accept
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_accept_enc
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_accept_lang
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_referer
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_connection
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_content_len
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_content_len
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_content_type
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_content_type
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http.server
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http.location
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_protocol
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_protocol
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_start
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_start
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_raw_header
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_raw_header
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_method
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_cookie
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_cookie
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file.magic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_user_agent
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_host
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_raw_host
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_stat_msg
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http_stat_code
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http2_header_name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http2_header_name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http2_header
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for http2_header
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dns_query
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dnp3_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dnp3_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tls.sni
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tls.cert_issuer
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tls.cert_subject
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tls.cert_serial
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tls.cert_fingerprint
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tls.certs
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ja3.hash
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ja3.string
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ja3s.hash
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ja3s.string
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dce_stub_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dce_stub_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dce_stub_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for dce_stub_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for smb_named_pipe
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for smb_share
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh.proto
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh.proto
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh_software
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh_software
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh.hassh
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh.hassh.server
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh.hassh.string
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ssh.hassh.server.string
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for file_data
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for krb5_cname
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for krb5_sname
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.method
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.uri
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.protocol
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.protocol
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.method
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.stat_msg
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.request_line
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for sip.response_line
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for rfb.name
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for snmp.community
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for snmp.community
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.connect.clientid
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.connect.username
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.connect.password
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.connect.willtopic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.connect.willmessage
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.publish.topic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.publish.message
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.subscribe.topic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for mqtt.unsubscribe.topic
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for icmpv4.hdr
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for tcp.hdr
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for udp.hdr
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for icmpv6.hdr
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ipv4.hdr
+6/5/2021 -- 12:55:35 - <Perf> - using shared mpm ctx' for ipv6.hdr
+6/5/2021 -- 12:55:35 - <Config> - IP reputation disabled
+6/5/2021 -- 12:55:35 - <Config> - Loading rule file: /var/lib/suricata/rules/suricata.rules
+6/5/2021 -- 12:55:39 - <Info> - 1 rule files processed. 22556 rules successfully loaded, 0 rules failed
+6/5/2021 -- 12:55:39 - <Info> - Threshold config parsed: 0 rule(s) found
+6/5/2021 -- 12:55:39 - <Perf> - using shared mpm ctx' for tcp-packet
+6/5/2021 -- 12:55:39 - <Perf> - using shared mpm ctx' for tcp-stream
+6/5/2021 -- 12:55:39 - <Perf> - using shared mpm ctx' for udp-packet
+6/5/2021 -- 12:55:39 - <Perf> - using shared mpm ctx' for other-ip
+6/5/2021 -- 12:55:39 - <Info> - 22559 signatures processed. 1280 are IP-only rules, 3868 are inspecting packet payload, 17193 inspect application layer, 105 are decoder event only
+6/5/2021 -- 12:55:39 - <Config> - building signature grouping structure, stage 1: preprocessing rules... complete
+6/5/2021 -- 12:55:39 - <Perf> - TCP toserver: 41 port groups, 35 unique SGH's, 6 copies
+6/5/2021 -- 12:55:39 - <Perf> - TCP toclient: 21 port groups, 21 unique SGH's, 0 copies
+6/5/2021 -- 12:55:39 - <Perf> - UDP toserver: 41 port groups, 37 unique SGH's, 4 copies
+6/5/2021 -- 12:55:39 - <Perf> - UDP toclient: 21 port groups, 17 unique SGH's, 4 copies
+6/5/2021 -- 12:55:39 - <Perf> - OTHER toserver: 254 proto groups, 3 unique SGH's, 251 copies
+6/5/2021 -- 12:55:39 - <Perf> - OTHER toclient: 254 proto groups, 0 unique SGH's, 254 copies
+6/5/2021 -- 12:55:44 - <Perf> - Unique rule groups: 113
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "toserver TCP packet": 26
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "toclient TCP packet": 20
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "toserver TCP stream": 23
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "toclient TCP stream": 21
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "toserver UDP packet": 37
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "toclient UDP packet": 16
+6/5/2021 -- 12:55:44 - <Perf> - Builtin MPM "other IP packet": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_uri (http)": 13
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_raw_uri (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_request_line (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_client_body (http)": 5
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_response_line (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_header (http)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_header (http)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_header_names (http)": 3
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_header_names (http)": 3
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_accept (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_accept_enc (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_accept_lang (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_referer (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_connection (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_content_len (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_content_len (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_content_type (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_content_type (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http.server (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http.location (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_protocol (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_protocol (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_start (http)": 4
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_start (http)": 4
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_raw_header (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_raw_header (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_method (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_cookie (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_cookie (http)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_user_agent (http)": 5
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_host (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver http_host (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient http_stat_code (http)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver dns_query (dns)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver dns_query (dns)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver tls.sni (tls)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver tls.sni (tls)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient tls.cert_issuer (tls)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient tls.cert_subject (tls)": 2
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient tls.cert_serial (tls)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver ja3.hash (tls)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient ja3s.hash (tls)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver ssh.proto (ssh)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient ssh.proto (ssh)": 1
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver file_data (smtp)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient file_data (http)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver file_data (smb)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient file_data (smb)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toserver file_data (http2)": 6
+6/5/2021 -- 12:55:44 - <Perf> - AppLayer MPM "toclient file_data (http2)": 6
+6/5/2021 -- 12:55:51 - <Config> - Found affinity definition for "management-cpu-set"
+6/5/2021 -- 12:55:51 - <Config> - Found affinity definition for "receive-cpu-set"
+6/5/2021 -- 12:55:51 - <Config> - Found affinity definition for "worker-cpu-set"
+6/5/2021 -- 12:55:51 - <Config> - Using default prio 'high' for set 'worker-cpu-set'
+6/5/2021 -- 12:55:51 - <Config> - Enabling locked memory for mmap on iface ens2f0
+6/5/2021 -- 12:55:51 - <Config> - Enabling tpacket v3 capture on iface ens2f0
+6/5/2021 -- 12:55:51 - <Config> - Using queue based cluster mode for AF_PACKET (iface ens2f0)
+6/5/2021 -- 12:55:51 - <Perf> - ens2f0: disabling gro offloading
+6/5/2021 -- 12:55:51 - <Perf> - ens2f0: disabling tso offloading
+6/5/2021 -- 12:55:51 - <Perf> - ens2f0: disabling gso offloading
+6/5/2021 -- 12:55:51 - <Perf> - ens2f0: disabling sg offloading
+6/5/2021 -- 12:55:51 - <Config> - ens2f0: enabling zero copy mode by using data release call
+6/5/2021 -- 12:55:51 - <Info> - Going to use 14 thread(s)
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#01-ens2f0" to cpu/core 2, thread id 7127
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#02-ens2f0" to cpu/core 3, thread id 7131
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#03-ens2f0" to cpu/core 4, thread id 7132
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#04-ens2f0" to cpu/core 5, thread id 7137
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#05-ens2f0" to cpu/core 6, thread id 7144
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#06-ens2f0" to cpu/core 7, thread id 7150
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#07-ens2f0" to cpu/core 8, thread id 7151
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#08-ens2f0" to cpu/core 9, thread id 7152
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#09-ens2f0" to cpu/core 10, thread id 7155
+6/5/2021 -- 12:55:51 - <Perf> - Setting prio -2 for thread "W#10-ens2f0" to cpu/core 11, thread id 7156
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#11-ens2f0" to cpu/core 12, thread id 7165
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#12-ens2f0" to cpu/core 13, thread id 7166
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#13-ens2f0" to cpu/core 14, thread id 7167
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#14-ens2f0" to cpu/core 15, thread id 7169
+6/5/2021 -- 12:55:52 - <Config> - Enabling locked memory for mmap on iface ens2f0
+6/5/2021 -- 12:55:52 - <Config> - Enabling tpacket v3 capture on iface ens2f0
+6/5/2021 -- 12:55:52 - <Config> - Using queue based cluster mode for AF_PACKET (iface ens2f0)
+6/5/2021 -- 12:55:52 - <Config> - ens2f0: enabling zero copy mode by using data release call
+6/5/2021 -- 12:55:52 - <Info> - Going to use 14 thread(s)
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#01-ens2f0" to cpu/core 34, thread id 7170
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#02-ens2f0" to cpu/core 35, thread id 7171
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#03-ens2f0" to cpu/core 36, thread id 7172
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#04-ens2f0" to cpu/core 37, thread id 7174
+6/5/2021 -- 12:55:52 - <Perf> - Setting prio -2 for thread "W#05-ens2f0" to cpu/core 38, thread id 7175
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#06-ens2f0" to cpu/core 39, thread id 7176
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#07-ens2f0" to cpu/core 40, thread id 7177
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#08-ens2f0" to cpu/core 41, thread id 7178
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#09-ens2f0" to cpu/core 42, thread id 7182
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#10-ens2f0" to cpu/core 43, thread id 7183
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#11-ens2f0" to cpu/core 44, thread id 7185
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#12-ens2f0" to cpu/core 45, thread id 7193
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#13-ens2f0" to cpu/core 46, thread id 7197
+6/5/2021 -- 12:55:53 - <Perf> - Setting prio -2 for thread "W#14-ens2f0" to cpu/core 47, thread id 7198
+6/5/2021 -- 12:55:54 - <Config> - using 1 flow manager threads
+6/5/2021 -- 12:55:54 - <Perf> - Setting prio 0 for thread "FM#01", thread id 7199
+6/5/2021 -- 12:55:54 - <Config> - using 1 flow recycler threads
+6/5/2021 -- 12:55:54 - <Perf> - Setting prio 0 for thread "FR#01", thread id 7200
+6/5/2021 -- 12:55:54 - <Perf> - Setting prio 0 for thread "CW", thread id 7201
+6/5/2021 -- 12:55:54 - <Perf> - Setting prio 0 for thread "CS", thread id 7202
+6/5/2021 -- 12:55:54 - <Info> - Running in live mode, activating unix socket
+6/5/2021 -- 12:55:54 - <Info> - Using unix socket file '/var/run/suricata/suricata-command.socket'
+6/5/2021 -- 12:55:54 - <Perf> - Setting prio 0 for thread "US", thread id 7203
+6/5/2021 -- 12:55:54 - <Notice> - all 28 packet processing threads, 4 management threads initialized, engine started.
+6/5/2021 -- 12:55:54 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:54 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:54 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:55 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:55 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:55 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:55 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:55 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:56 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:56 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:56 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:56 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:57 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:57 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:57 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:57 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:57 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:58 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:58 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:58 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:58 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:58 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:58 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:59 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:59 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:59 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:59 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:55:59 - <Perf> - AF_PACKET V3 RX Ring params: block_size=2097152 block_nr=232 frame_size=1616 frame_nr=300904 (mem: 486539264)
+6/5/2021 -- 12:56:00 - <Info> - All AFP capture threads are running.
+6/5/2021 -- 12:56:10 - <Notice> - Flow emergency mode entered...
+6/5/2021 -- 13:00:56 - <Notice> - Signal Received.  Stopping engine.
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Info> - Exiting AFP V3 read loop
+6/5/2021 -- 13:00:56 - <Perf> - 0 new flows, 0 established flows were timed out, 0 flows in closed state
+6/5/2021 -- 13:00:57 - <Info> - time elapsed 306.266s
+6/5/2021 -- 13:01:00 - <Perf> - 2824530 flows processed
+6/5/2021 -- 13:01:00 - <Perf> - (W#01-ens2f0) Kernel: Packets 20366298, dropped 5264
+6/5/2021 -- 13:01:00 - <Perf> - (W#02-ens2f0) Kernel: Packets 21847652, dropped 646378
+6/5/2021 -- 13:01:00 - <Perf> - (W#03-ens2f0) Kernel: Packets 22275051, dropped 953633
+6/5/2021 -- 13:01:01 - <Perf> - (W#04-ens2f0) Kernel: Packets 21589037, dropped 679248
+6/5/2021 -- 13:01:01 - <Perf> - (W#05-ens2f0) Kernel: Packets 21480559, dropped 722443
+6/5/2021 -- 13:01:01 - <Perf> - (W#06-ens2f0) Kernel: Packets 21525450, dropped 588449
+6/5/2021 -- 13:01:01 - <Perf> - (W#07-ens2f0) Kernel: Packets 21505750, dropped 563354
+6/5/2021 -- 13:01:01 - <Perf> - (W#08-ens2f0) Kernel: Packets 21719419, dropped 767342
+6/5/2021 -- 13:01:01 - <Perf> - (W#09-ens2f0) Kernel: Packets 21547512, dropped 626044
+6/5/2021 -- 13:01:01 - <Perf> - (W#10-ens2f0) Kernel: Packets 20602998, dropped 67015
+6/5/2021 -- 13:01:01 - <Perf> - (W#11-ens2f0) Kernel: Packets 20709129, dropped 194806
+6/5/2021 -- 13:01:01 - <Perf> - (W#12-ens2f0) Kernel: Packets 20421190, dropped 101012
+6/5/2021 -- 13:01:01 - <Perf> - (W#13-ens2f0) Kernel: Packets 20669163, dropped 147919
+6/5/2021 -- 13:01:01 - <Perf> - (W#14-ens2f0) Kernel: Packets 20654243, dropped 101082
+6/5/2021 -- 13:01:01 - <Perf> - (W#01-ens2f0) Kernel: Packets 20005434, dropped 62178
+6/5/2021 -- 13:01:01 - <Perf> - (W#02-ens2f0) Kernel: Packets 20438514, dropped 68935
+6/5/2021 -- 13:01:01 - <Perf> - (W#03-ens2f0) Kernel: Packets 20380747, dropped 65569
+6/5/2021 -- 13:01:01 - <Perf> - (W#04-ens2f0) Kernel: Packets 20673970, dropped 71578
+6/5/2021 -- 13:01:01 - <Perf> - (W#05-ens2f0) Kernel: Packets 20750109, dropped 74852
+6/5/2021 -- 13:01:01 - <Perf> - (W#06-ens2f0) Kernel: Packets 20304173, dropped 81584
+6/5/2021 -- 13:01:01 - <Perf> - (W#07-ens2f0) Kernel: Packets 20378395, dropped 87008
+6/5/2021 -- 13:01:02 - <Perf> - (W#08-ens2f0) Kernel: Packets 20531611, dropped 88229
+6/5/2021 -- 13:01:02 - <Perf> - (W#09-ens2f0) Kernel: Packets 20700528, dropped 88720
+6/5/2021 -- 13:01:02 - <Perf> - (W#10-ens2f0) Kernel: Packets 20663247, dropped 93800
+6/5/2021 -- 13:01:02 - <Perf> - (W#11-ens2f0) Kernel: Packets 20636546, dropped 104560
+6/5/2021 -- 13:01:02 - <Perf> - (W#12-ens2f0) Kernel: Packets 20856244, dropped 96112
+6/5/2021 -- 13:01:02 - <Perf> - (W#13-ens2f0) Kernel: Packets 20224358, dropped 104115
+6/5/2021 -- 13:01:02 - <Perf> - (W#14-ens2f0) Kernel: Packets 20277478, dropped 106872
+6/5/2021 -- 13:01:02 - <Info> - Alerts: 229656
+6/5/2021 -- 13:01:02 - <Perf> - ippair memory usage: 414144 bytes, maximum: 16777216
+6/5/2021 -- 13:01:02 - <Perf> - host memory usage: 398144 bytes, maximum: 33554432
+6/5/2021 -- 13:01:03 - <Info> - cleaning up signature grouping structure... complete
+6/5/2021 -- 13:01:03 - <Notice> - Stats for 'ens2f0':  pkts: 583734805, drop: 7358101 (1.26%), invalid chksum: 0
+6/5/2021 -- 13:01:03 - <Perf> - ens2f0: restoring gro offloading
+6/5/2021 -- 13:01:03 - <Perf> - ens2f0: restoring tso offloading
+6/5/2021 -- 13:01:03 - <Perf> - ens2f0: restoring gso offloading
+6/5/2021 -- 13:01:03 - <Perf> - ens2f0: restoring sg offloading
+6/5/2021 -- 13:01:03 - <Notice> - Stats for 'ens2f0':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+6/5/2021 -- 13:01:03 - <Perf> - Cleaning up Hyperscan global scratch
+6/5/2021 -- 13:01:03 - <Perf> - Clearing Hyperscan database cache
