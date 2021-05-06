@@ -300,6 +300,6 @@
     - name: Dump all variables
       template:  
         src: dumpall.j2
-        dest: "{{newdir_res.path}}/dumpall.txt"
+        dest: "{{newdir_res.path}}/dumpall.json"
       delegate_to: localhost
       become: false
