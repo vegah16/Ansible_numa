@@ -1,0 +1,12 @@
+# Runs all tests in order.
+
+---
+- import_playbook: default.yml
+- import_playbook: test1.yml
+- import_playbook: test2.yml
+- import_playbook: test3.yml
+- import_playbook: test4.yml
+- import_playbook: test5.yml
+- import_playbook: test6.yml
+- import_playbook: test7.yml
+- import_playbook: test8.yml
