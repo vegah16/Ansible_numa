@@ -13,7 +13,7 @@
         threading_worker_cpu: '"1-15", "32-47"'
         
         afpacket_threads_1: 15 # Threads in CPU group 1
-        afpacket_threads_2: 15 # Threads in CPU group 2
+        afpacket_threads_2: 16 # Threads in CPU group 2
 
         # Ring-size is another af-packet variable that can be considered for tuning
         # and performance benefits. It basically means the buffer size for packets 

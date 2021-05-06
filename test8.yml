@@ -11,7 +11,7 @@
     - role: common
       vars:
 
-        test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.
+        test_name: "test8" # Which test is it? Remember to change this in each test. Used to make result dir.
 
         threading_management_cpu: '"16-26"'
         threading_worker_cpu: '"0-15", "32-47"'

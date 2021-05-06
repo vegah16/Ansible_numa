@@ -14,7 +14,28 @@
         afpacket_threads_1: 15 # Threads in CPU group 1
         afpacket_threads_2: 0 # Threads in CPU group 2
 
+        # Ring-size is another af-packet variable that can be considered for tuning
+        # and performance benefits. It basically means the buffer size for packets 
+        # per thread.
+        # Default : 2048
+        # SEPTun setting : 200000
+        # SEPTun 2/redipranha setting : 300000
+        afpacket_ringsize: 300000
 
+        # SEPTun/default setting : 1048576
+        # SEPTun 2/redipranha setting : 2097152
+        afpacket_blocksize: 2097152
+
+        # To deal with high traffic, we set the max-pending-packets to maximum value 65500.
+        # Should not need any testing, leave at 65500.
+        # Default is 1024
+        max_pending_packets: 65500
+
+        # Testing (Uncomment to quickly override defaults)
+        # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        # test_seconds: 10 # How long to test.
+
+        
         # Testing (Uncomment to quickly override defaults)
         # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
         # test_seconds: 10 # How long to test.
