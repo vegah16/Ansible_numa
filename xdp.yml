@@ -1,19 +1,22 @@
-# Management on first CPU in each group, 0 and 32.
+# XDP, based on test 4
 
 ---
-- name: Test 4 - two mgmt
+- name: Test XDP
   hosts: ubuntu
   become: yes
   roles:
     - role: common
       vars:
-        test_name: "test4" # Which test is it? Remember to change this in each test. Used to make result dir.
+        test_name: "xdp" # Which test is it? Remember to change this in each test. Used to make result dir.
         threading_management_cpu: '"0", "32"'
         threading_worker_cpu: '"1-15", "33-47"'
         
         afpacket_threads_1: 15 # Threads in CPU group 1
         afpacket_threads_2: 15 # Threads in CPU group 2
 
+        xdp: yes
+        rx_ring: 512
+
         # Testing (Uncomment to quickly override defaults)
         # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
-        # test_seconds: 10 # How long to test.
+        test_seconds: 120 # How long to test.

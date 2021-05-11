@@ -14,14 +14,7 @@
         threading_worker_cpu: '"16-31", "48-63"'
 
         afpacket_threads_1: 16 # Threads in CPU group 1
-        afpacket_threads_2: 16 # Threads in CPU group 2
-
-        # SEPTun 2/redipranha setting : 300000
-        afpacket_ringsize: 300000        
-
-        # SEPTun 2/redipranha setting : 2097152
-        afpacket_blocksize: 2097152
-        max_pending_packets: 65500        
+        afpacket_threads_2: 16 # Threads in CPU group 2       
 
         # Testing (Uncomment to quickly override defaults)
         # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.

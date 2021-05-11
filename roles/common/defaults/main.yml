@@ -4,10 +4,17 @@ monitor_if: "ens2f0" # $ sudo lshw -class network -short
 # Whether configuration should be default or not.
 default: no
 
+# Use XDP or not. Only affects config file.
+xdp: yes
+xdp_test: no
+
+# NIC ring descriptor size
+rx_ring: 1024 # Default 1024
+
 # All CPUs in a set, e.g. 0-63
 cpu_set: "0-{{ansible_processor_vcpus - 1}}"
 
-threading_set_cpu_affinity: 'yes'
+threading_set_cpu_affinity: yes
 threading_management_cpu: '0'
 threading_receive_cpu: '{{threading_management_cpu}}' # This is not used for workers runmode, only autofp. For safe measure, we set equal to mgmt.
 threading_worker_cpu: '"1-15", "33-47"'
@@ -21,16 +28,27 @@ afpacket_interface: "{{monitor_if}}"
 afpacket_threads_1: 15 # Threads in CPU group 1
 afpacket_threads_2: "{{afpacket_threads_1}}" # Threads in CPU group 2
 afpacket_clustertype: "cluster_qm" # To bind Suricata to RSS queues
-afpacket_defrag: "no" # TODO: test yes/no, trenger kun å teste med beste test?
-afpacket_usemmap: "yes"
-afpacket_mmaplocked: "yes"
-afpacket_tpacketv3: "yes"
-afpacket_ringsize: 300000
+afpacket_defrag: no # TODO: test yes/no, trenger kun å teste med beste test?
+afpacket_usemmap: yes
+afpacket_mmaplocked: yes
+afpacket_tpacketv3: yes
+
+# Ring-size is another af-packet variable that can be considered for tuning
+# and performance benefits. It basically means the buffer size for packets 
+# per thread.
+# Default : 2048
+# SEPTun 1/2 setting : 200000
+# redipranha setting : 300000
+afpacket_ringsize: 200000
+
+# SEPTun/default setting : 1048576
+# SEPTun 2/redipranha setting : 2097152
 afpacket_blocksize: 2097152
 
 # To deal with high traffic, we set the max-pending-packets to maximum value 65500.
-# Should not need any testing, leave at 65500
-max_pending_packets: 65500 # Default is 1024
+# Should not need any testing, leave at 65500.
+# Default is 1024
+max_pending_packets: 65500
 
 runmode: "workers" # default is autofp
 

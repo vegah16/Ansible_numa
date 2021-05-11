@@ -266,7 +266,7 @@ outputs:
         - nfs
         - smb
         - tftp
-        - ikev2
+        - ike
         - dcerpc
         - krb5
         - snmp
@@ -289,7 +289,7 @@ outputs:
         - stats:
             totals: yes       # stats for all threads merged together
             threads: no       # per thread stats
-            deltas: no        # include delta values
+            deltas: yes       # include delta values
         # bi-directional flows
         - flow
         # uni-directional flows
@@ -652,6 +652,14 @@ af-packet:
     #copy-iface: eth1
     #  For eBPF and XDP setup including bypass, filter and load balancing, please
     #  see doc/userguide/capture-hardware/ebpf-xdp.rst for more info.
+{% if xdp %}
+    # Xdp mode, "soft" for skb based version, "driver" for network card
+    # based and "hw" for card supporting eBPF.
+    xdp-mode: soft
+    xdp-filter-file: /etc/suricata/xdp_filter.bpf
+    bypass: yes
+{% endif %}
+
 {% if afpacket_threads_2 != 0%}
   - interface: {{afpacket_interface}}
     # Number of receive threads. "auto" uses the number of cores
@@ -723,6 +731,13 @@ af-packet:
     #copy-iface: eth1
     #  For eBPF and XDP setup including bypass, filter and load balancing, please
     #  see doc/userguide/capture-hardware/ebpf-xdp.rst for more info.
+{% if xdp %}
+    # Xdp mode, "soft" for skb based version, "driver" for network card
+    # based and "hw" for card supporting eBPF.
+    xdp-mode: soft
+    xdp-filter-file: /etc/suricata/xdp_filter.bpf
+    bypass: yes
+{% endif %}
 {% endif %}
 
   # Put default values here. These will be used for an interface that is not
@@ -802,7 +817,7 @@ app-layer:
       enabled: yes
     snmp:
       enabled: yes
-    ikev2:
+    ike:
       enabled: yes
     tls:
       enabled: yes
@@ -1288,7 +1303,40 @@ vlan:
 # icmp.
 
 flow-timeouts:
-
+{% if xdp_test %}
+  default:
+    new: 3
+    established: 30
+    closed: 0
+    bypassed: 20
+    emergency-new: 1
+    emergency-established: 10
+    emergency-closed: 0
+    emergency-bypassed: 5
+  tcp:
+    new: 3
+    established: 30
+    closed: 1
+    bypassed: 25
+    emergency-new: 1
+    emergency-established: 10
+    emergency-closed: 0
+    emergency-bypassed: 5
+  udp:
+    new: 3
+    established: 30
+    bypassed: 20
+    emergency-new: 1
+    emergency-established: 10
+    emergency-bypassed: 5
+  icmp:
+    new: 2
+    established: 30
+    bypassed: 20
+    emergency-new: 1
+    emergency-established: 10
+    emergency-bypassed: 5
+{% else %}
   default:
     new: 30
     established: 300
@@ -1321,6 +1369,7 @@ flow-timeouts:
     emergency-new: 10
     emergency-established: 100
     emergency-bypassed: 50
+{% endif %}
 
 # Stream engine settings. Here the TCP stream tracking and reassembly
 # engine is configured.
@@ -1381,10 +1430,28 @@ flow-timeouts:
 #                               # is used or when stream-event:reassembly_overlap_different_data;
 #                               # is used in a rule.
 #
+{% if xdp_test %}
+stream:
+  memcap: 14gb
+  checksum-validation: no
+  bypass: yes
+  prealloc-sessions: 375000
+  inline: auto
+  reassembly:
+    memcap: 20gb
+    depth: 1mb
+    toserver-chunk-size: 2560
+    toclient-chunk-size: 2560
+    randomize-chunk-size: yes
+    randomize-chunk-range: 10
+    raw: yes
+    segment-prealloc: 200000
+{% else %}
 stream:
   memcap: 64mb
   checksum-validation: yes      # reject incorrect csums
   inline: auto                  # auto will use inline mode in IPS mode, yes or no set it statically
+  bypass: {{xdp}}
   reassembly:
     memcap: 256mb
     depth: 1mb                  # reassemble 1mb into a stream
@@ -1395,6 +1462,7 @@ stream:
     #raw: yes
     #segment-prealloc: 2048
     #check-overlap-different-data: true
+{% endif %}
 
 # Host table:
 #
