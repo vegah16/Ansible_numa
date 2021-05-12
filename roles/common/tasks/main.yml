@@ -129,7 +129,7 @@
       command: "ethtool -C {{monitor_if}} adaptive-rx off adaptive-tx off rx-usecs 125" # TODO: test e.g. 150
 
     - name: Changes the number of ring entries for the Rx ring. # TODO: test
-      command: "ethtool -G {{monitor_if}} rx 1024" # buffer størrelse, finnes en maks størrelse men kan teste med mindre
+      command: "ethtool -G {{monitor_if}} rx {{rx_ring}}" # buffer størrelse, finnes en maks størrelse men kan teste med mindre
 
     - name: Make sure the RSS hash function is Toeplitz.
       command: "ethtool -X {{monitor_if}} hfunc toeplitz"
@@ -181,6 +181,22 @@
   tags:
     - testing
   block:
+
+    # Suricata needs to start up before testing can begin.
+    - name: Pause for Suricata initialization
+      pause:
+        seconds: 30
+
+    # This task only runs on Trex machine.
+    - name: Start Trex traffic generator
+      shell: "./t-rex-64 -f avl/sfr_delay_10_1g.yaml -c 4 -m 4 -d {{test_seconds}}"
+      args:
+        chdir: /opt/trex/v2.88
+      async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.
+      poll: 0 # Don't wait for result
+      delegate_to: "{{groups['trex'][0]}}"
+      tags:
+        - trex
 
     # Example directory path for test1:
     # results/test1/2021-04-26T08:53:00Z/

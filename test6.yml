@@ -21,7 +21,7 @@
         # Default : 2048
         # SEPTun setting : 200000
         # SEPTun 2/redipranha setting : 300000
-        afpacket_ringsize: 300000
+        afpacket_ringsize: 200000
 
         # SEPTun/default setting : 1048576
         # SEPTun 2/redipranha setting : 2097152
@@ -36,6 +36,12 @@
         # Should not need any testing, leave at 65500.
         # Default is 1024
         max_pending_packets: 65500
+
+        # NIC ring descriptor size
+        rx_ring: 512 # Default 1024
+
+        # Inspection will be skipped when stream.reassembly.depth is reached for a particular flow.
+        stream_bypass: yes # Deafult: no
 
 
         # Testing (Uncomment to quickly override defaults)

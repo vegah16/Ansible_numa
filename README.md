@@ -8,7 +8,10 @@ Ansible playbook for master's thesis.
 
 ```
 [ubuntu]
-username@ip
+username@192.168.1.191
+
+[trex]
+username@192.168.1.195
 ```
 
 4. Install Ansible dependencies (Custom modules are added to env):

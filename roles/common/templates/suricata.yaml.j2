@@ -1384,7 +1384,8 @@ flow-timeouts:
 stream:
   memcap: 64mb
   checksum-validation: yes      # reject incorrect csums
-  inline: auto                  # auto will use inline mode in IPS mode, yes or no set it statically
+  inline: auto
+  bypass: {{stream_bypass}}                  # auto will use inline mode in IPS mode, yes or no set it statically
   reassembly:
     memcap: 256mb
     depth: 1mb                  # reassemble 1mb into a stream

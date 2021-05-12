@@ -4,6 +4,12 @@ monitor_if: "ens2f0" # $ sudo lshw -class network -short
 # Whether configuration should be default or not.
 default: no
 
+# NIC ring descriptor size
+rx_ring: 1024 # Default 1024. 512 and 2048 yield worse results
+
+# Inspection will be skipped when stream.reassembly.depth is reached for a particular flow.
+stream_bypass: yes # Deafult: no
+
 # All CPUs in a set, e.g. 0-63
 cpu_set: "0-{{ansible_processor_vcpus - 1}}"
 
@@ -25,12 +31,23 @@ afpacket_defrag: "no" # TODO: test yes/no, trenger kun å teste med beste test?
 afpacket_usemmap: "yes"
 afpacket_mmaplocked: "yes"
 afpacket_tpacketv3: "yes"
-afpacket_ringsize: 300000
+
+# Ring-size is another af-packet variable that can be considered for tuning
+# and performance benefits. It basically means the buffer size for packets 
+# per thread.
+# Default : 2048
+# SEPTun setting : 200000
+# SEPTun 2/redipranha setting : 300000
+afpacket_ringsize: 200000
+
+# SEPTun/default setting : 1048576
+# SEPTun 2/redipranha setting : 2097152
 afpacket_blocksize: 2097152
 
 # To deal with high traffic, we set the max-pending-packets to maximum value 65500.
-# Should not need any testing, leave at 65500
-max_pending_packets: 65500 # Default is 1024
+# Should not need any testing, leave at 65500.
+# Default is 1024
+max_pending_packets: 65500
 
 runmode: "workers" # default is autofp
 
