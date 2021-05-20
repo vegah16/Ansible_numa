@@ -1,1 +1,0 @@
-The packetdrop percentage is 0.5823064026954125
