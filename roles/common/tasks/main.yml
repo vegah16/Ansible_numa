@@ -156,7 +156,7 @@
     # Uses the template to configure Suricata by inserting variables.
     - name: Configure suricata
       tags:
-        - temp
+        - configure
       template:  
         src: suricata.yaml.j2  
         dest: /etc/suricata/suricata.yaml 

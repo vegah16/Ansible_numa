@@ -1288,10 +1288,10 @@ vlan:
 # icmp.
 
 flow-timeouts:
-
+{% if default %}
   default:
     new: 30
-    established: {{flow_timeouts_default_established}}
+    established: 300
     closed: 0
     bypassed: 100
     emergency-new: 10
@@ -1299,28 +1299,62 @@ flow-timeouts:
     emergency-closed: 0
     emergency-bypassed: 50
   tcp:
-    new: {{flow_timeouts_tcp_new}}
+    new: 60
     established: 600
     closed: 60
     bypassed: 100
-    emergency-new: {{flow_timeouts_tcp_emergency_new}}
+    emergency-new: 5
     emergency-established: 100
     emergency-closed: 10
     emergency-bypassed: 50
   udp:
     new: 30
-    established: {{flow_timeouts_udp_established}}
+    established: 300
     bypassed: 100
     emergency-new: 10
     emergency-established: 100
     emergency-bypassed: 50
   icmp:
     new: 30
-    established: {{flow_timeouts_icmp_established}}
+    established: 300
     bypassed: 100
     emergency-new: 10
     emergency-established: 100
     emergency-bypassed: 50
+{% else %}
+  default:
+    new: 3
+    established: 30
+    closed: 0
+    bypassed: 20
+    emergency-new: 1
+    emergency-established: 10
+    emergency-closed: 0
+    emergency-bypassed: 5
+  tcp:
+    new: 3
+    established: 30
+    closed: 1
+    bypassed: 25
+    emergency-new: 1
+    emergency-established: 10
+    emergency-closed: 0
+    emergency-bypassed: 5
+  udp:
+    new: 3
+    established: 30
+    bypassed: 20
+    emergency-new: 1
+    emergency-established: 10
+    emergency-bypassed: 5
+  icmp:
+    new: 2
+    established: 30
+    bypassed: 20
+    emergency-new: 1
+    emergency-established: 10
+    emergency-bypassed: 5
+{% endif %}
 
 # Stream engine settings. Here the TCP stream tracking and reassembly
 # engine is configured.
