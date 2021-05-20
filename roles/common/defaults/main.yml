@@ -48,28 +48,28 @@ max_pending_packets: 65500
 
 runmode: "workers" # default is autofp
 
-# Related to memory and emergency mode. See redpiranha under "Suricata Config"
-outputs_fast_enabled: no # default: yes
-outputs_eve_log_filetype: "syslog" #default: regular
-defrag_memcap: "1gb" # default: 32mb
-defrag_timeout: 10 # default: 60
-flow_timeouts_default_established: 60 # default: 300
-flow_timeouts_tcp_new: 30 # default: 60
-flow_timeouts_tcp_emergency_new: 1 # default: 5
-flow_timeouts_udp_established: 60 # default: 300
-flow_timeouts_icmp_established: 60 # default: 300
-flow_memcap: "18gb" # default: 128mb
-flow_hash_size: 256072 # default: 65536
-flow_prealloc: 300000 # default: 10000
-stream_memcap: "12gb" # default: 64mb
-stream_checksum_validation: no # default: yes
-stream_prealloc_sessions: 200000 # default: 2000
+# Related to memory and emergency mode. See redpiranha under "Suricata Config".
+# All values 
+outputs_fast_enabled: "{{'yes' if default else 'no'}}"
+defrag_memcap: "{{'32mb' if default else '1gb'}}"
+defrag_timeout: "{{'60' if default else '10'}}"
+flow_timeouts_default_established: "{{'300' if default else '60'}}"
+flow_timeouts_tcp_new: "{{'60' if default else '30'}}"
+flow_timeouts_tcp_emergency_new: "{{'5' if default else '1'}}"
+flow_timeouts_udp_established: "{{'300' if default else '60'}}"
+flow_timeouts_icmp_established: "{{'300' if default else '60'}}"
+flow_memcap: "{{'128mb' if default else '18gb'}}"
+flow_hash_size: "{{'65536' if default else '256072'}}"
+flow_prealloc: "{{'10000' if default else '300000'}}"
+stream_memcap: "{{'64mb' if default else '12gb'}}"
+stream_checksum_validation: "{{'yes' if default else 'no'}}"
+stream_prealloc_sessions: "{{'2000' if default else '200000'}}"
 # Inspection will be skipped when stream.reassembly.depth is reached for a particular flow.
-stream_bypass: yes # Deafult: no
-stream_reassembly_memcap: "24gb" # default: 256mb
-stream_reassembly_segment_prealloc: 200000 # default: 2048
-detect_profile: "high" # default: medium
-detect_prefilter: "auto" # default: mpm
+stream_bypass: "{{'no' if default else 'yes'}}"
+stream_reassembly_memcap: "{{'256mb' if default else '24gb'}}"
+stream_reassembly_segment_prealloc: "{{'2048' if default else '200000'}}"
+detect_profile: "{{'medium' if default else 'high'}}"
+detect_prefilter: "{{'mpm' if default else 'auto'}}"
 
 # Testing
 counters: "capture.kernel_packets,capture.kernel_drops,tcp.reassembly_gap" # Comma separated. Which counters to plot with suri-stats.

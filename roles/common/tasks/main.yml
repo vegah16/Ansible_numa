@@ -154,14 +154,12 @@
         state: absent
 
     # Uses the template to configure Suricata by inserting variables.
-    - name: Configure suricata  
+    - name: Configure suricata
+      tags:
+        - temp
       template:  
         src: suricata.yaml.j2  
         dest: /etc/suricata/suricata.yaml 
-
-    # Makes sure that the signatures are up to date.
-    - name: Update signatures
-      command: suricata-update
 
     # To make sure that the IDS is restarted with fresh log files etc.
     - name: Restart suricata
