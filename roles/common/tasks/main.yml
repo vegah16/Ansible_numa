@@ -187,7 +187,7 @@
 
     # This task only runs on Trex machine.
     - name: Start Trex traffic generator
-      shell: "./t-rex-64 -f avl/sfr_delay_10_1g.yaml -c 4 -m 4 -d {{test_seconds}}"
+      shell: "./t-rex-64 -f avl/sfr_delay_10_1g.yaml -c 4 -m 9 -d {{test_seconds}}"
       args:
         chdir: /opt/trex/v2.88
       async: "{{test_seconds * 2 | int}}" # Don't wait for result. Async value longer than command runtime.

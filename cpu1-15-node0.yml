@@ -1,0 +1,35 @@
+# Only use one CPU group.
+
+---
+- name: cpu1-15-node0
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: common
+      vars:
+        test_name: "cpu1-15-node0" # Which test is it? Remember to change this in each test. Used to make result dir.
+        threading_management_cpu: '"0"'
+        threading_worker_cpu: '"1-15"'
+
+        outputs_fast_enabled: "yes"
+        defrag_memcap: "32mb"
+        defrag_timeout: "60"
+        flow_memcap: "128mb"
+        flow_hash_size: "65536"
+        flow_prealloc: "10000"
+        stream_memcap: "64mb"
+        stream_checksum_validation: "yes"
+        stream_prealloc_sessions: "2000"
+        # Inspection will be skipped when stream.reassembly.depth is reached for a particular flow.
+        stream_bypass: "no"
+        stream_reassembly_memcap: "256mb"
+        stream_reassembly_segment_prealloc: "2048"
+        detect_profile: "medium"
+        detect_prefilter: "mpm"
+        
+        afpacket_threads_1: 15 # Threads in CPU group 1
+        afpacket_threads_2: 0 # Threads in CPU group 2
+        
+        # Testing (Uncomment to quickly override defaults)
+        # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        # test_seconds: 30 # How long to test.
