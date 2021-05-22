@@ -69,6 +69,6 @@ stream_reassembly_segment_prealloc: "{{'2048' if default_memory else '200000'}}"
 
 # Testing
 counters: "capture.kernel_packets,capture.kernel_drops,tcp.reassembly_gap" # Comma separated. Which counters to plot with suri-stats.
-test_seconds: 120 # How long to test.
+test_seconds: 600 # How long to test.
 test_name: "test1" # Which test is it? Remember to change this in each test. Used to make result dir.
 traffic_gb: 9 # max 10.
