@@ -1,0 +1,32 @@
+# Runs all throughput limit cpu tests in order. They test for 120 sec each.
+
+---
+- import_playbook: throughput/limit_cpu/cpu_29.yml
+- import_playbook: throughput/limit_cpu/cpu_28.yml
+- import_playbook: throughput/limit_cpu/cpu_27.yml
+- import_playbook: throughput/limit_cpu/cpu_26.yml
+- import_playbook: throughput/limit_cpu/cpu_25.yml
+- import_playbook: throughput/limit_cpu/cpu_24.yml
+- import_playbook: throughput/limit_cpu/cpu_23.yml
+- import_playbook: throughput/limit_cpu/cpu_22.yml
+- import_playbook: throughput/limit_cpu/cpu_21.yml
+- import_playbook: throughput/limit_cpu/cpu_20.yml
+- import_playbook: throughput/limit_cpu/cpu_19.yml
+- import_playbook: throughput/limit_cpu/cpu_18.yml
+- import_playbook: throughput/limit_cpu/cpu_17.yml
+- import_playbook: throughput/limit_cpu/cpu_16.yml
+- import_playbook: throughput/limit_cpu/cpu_15.yml
+- import_playbook: throughput/limit_cpu/cpu_14.yml
+- import_playbook: throughput/limit_cpu/cpu_13.yml
+- import_playbook: throughput/limit_cpu/cpu_12.yml
+- import_playbook: throughput/limit_cpu/cpu_11.yml
+- import_playbook: throughput/limit_cpu/cpu_10.yml
+- import_playbook: throughput/limit_cpu/cpu_9.yml
+- import_playbook: throughput/limit_cpu/cpu_8.yml
+- import_playbook: throughput/limit_cpu/cpu_7.yml
+- import_playbook: throughput/limit_cpu/cpu_6.yml
+- import_playbook: throughput/limit_cpu/cpu_5.yml
+- import_playbook: throughput/limit_cpu/cpu_4.yml
+- import_playbook: throughput/limit_cpu/cpu_3.yml
+- import_playbook: throughput/limit_cpu/cpu_2.yml
+- import_playbook: throughput/limit_cpu/cpu_1.yml

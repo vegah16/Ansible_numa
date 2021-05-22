@@ -1,0 +1,19 @@
+---
+- name: cpu_27
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: ../../roles/common
+      vars:
+
+        test_name: "cpu_27" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        threading_management_cpu: '"0", "32"'
+        threading_worker_cpu: '"1-15", "33-44"'
+
+        afpacket_threads_1: 15 # Threads in CPU group 1
+        afpacket_threads_2: 12 # Threads in CPU group 2
+
+
+        # Testing (Uncomment to quickly override defaults)
+        test_seconds: 120 # How long to test.

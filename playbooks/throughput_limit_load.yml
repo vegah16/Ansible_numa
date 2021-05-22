@@ -1,0 +1,11 @@
+# Runs all throughput limit load tests in order. Normal testing duration.
+
+---
+- import_playbook: throughput/limit_load/traffic_1.yml
+- import_playbook: throughput/limit_load/traffic_2.yml
+- import_playbook: throughput/limit_load/traffic_3.yml
+- import_playbook: throughput/limit_load/traffic_4.yml
+- import_playbook: throughput/limit_load/traffic_5.yml
+- import_playbook: throughput/limit_load/traffic_6.yml
+- import_playbook: throughput/limit_load/traffic_7.yml
+- import_playbook: throughput/limit_load/traffic_8.yml

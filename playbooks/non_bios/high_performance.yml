@@ -1,0 +1,23 @@
+# High performance configuration
+
+---
+- name: high_performance
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: ../roles/common
+      vars:
+
+        test_name: "high_performance" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        bios: no
+
+        threading_management_cpu: '"0", "32"'
+        threading_worker_cpu: '"1-15", "33-47"'
+
+        afpacket_threads_1: 15 # Threads in CPU group 1
+        afpacket_threads_2: 15 # Threads in CPU group 2
+
+        # Testing (Uncomment to quickly override defaults)
+        # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        # test_seconds: 10 # How long to test.

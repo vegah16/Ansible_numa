@@ -1,14 +1,16 @@
 # DEFAULT SETUP
+
 ---
 - name: Test default
   hosts: ubuntu
   become: yes
   roles:
-    - role: common
+    - role: ../roles/common
       vars:
         test_name: "default" # Which test is it? Remember to change this in each test. Used to make result dir.
 
         default: yes
+        bios: no
 
         threading_set_cpu_affinity: 'no'
         threading_worker_cpu: '"all"'

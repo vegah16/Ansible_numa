@@ -1,0 +1,7 @@
+# Runs all non-bios tests in order twice.
+
+---
+- import_playbook: non_bios/default.yml
+- import_playbook: non_bios/default.yml
+- import_playbook: non_bios/high_performance.yml
+- import_playbook: non_bios/high_performance.yml

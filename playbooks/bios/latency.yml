@@ -1,17 +1,14 @@
-# Follows Suricata 9.5.2.1 https://suricata.readthedocs.io/en/suricata-6.0.0/performance/high-performance-config.html
-# NIC os on NUMA 0, so Suricata should run on the same node.
-# Suricata pins 10 CPUs on the other NUMA node for management. We don't want this, but let's test.
-# We always have to leave CPU 0 for the kernel.
+# Latency test with workers on node 1.
 
 ---
-- name: wrongnode
+- name: latency
   hosts: ubuntu
   become: yes
   roles:
-    - role: common
+    - role: ../roles/common
       vars:
 
-        test_name: "wrongnode" # Which test is it? Remember to change this in each test. Used to make result dir.
+        test_name: "latency" # Which test is it? Remember to change this in each test. Used to make result dir.
 
         threading_management_cpu: '"16", "48"'
         threading_worker_cpu: '"17-31", "49-63"'
