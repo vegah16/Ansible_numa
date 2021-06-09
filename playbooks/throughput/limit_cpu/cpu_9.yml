@@ -3,7 +3,7 @@
   hosts: ubuntu
   become: yes
   roles:
-    - role: ../../roles/common
+    - role: ../roles/common
       vars:
 
         test_name: "cpu_9" # Which test is it? Remember to change this in each test. Used to make result dir.
@@ -13,7 +13,3 @@
 
         afpacket_threads_1: 9 # Threads in CPU group 1
         afpacket_threads_2: 0 # Threads in CPU group 2
-
-
-        # Testing (Uncomment to quickly override defaults)
-        test_seconds: 120 # How long to test.

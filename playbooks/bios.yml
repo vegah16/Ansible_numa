@@ -1,23 +1,21 @@
 # Runs all bios tests in order twice.
 
 ---
-- import_playbook: bios/high_performance.yml
-- import_playbook: bios/high_performance.yml
+# - import_playbook: bios/high_performance.yml
+# - import_playbook: bios/high_performance.yml
 
-- import_playbook: bios/latency.yml
-- import_playbook: bios/latency.yml
-
-- import_playbook: bios/one_mgmt.yml
-- import_playbook: bios/one_mgmt.yml
+# - import_playbook: bios/latency.yml
+# - import_playbook: bios/latency.yml
 
 - import_playbook: bios/mgmt_node1.yml
-- import_playbook: bios/mgmt_node1.yml
+# - import_playbook: bios/mgmt_node1.yml
 
-- import_playbook: bios/one_cpu_group.yml
-- import_playbook: bios/one_cpu_group.yml
-
-- import_playbook: bios/default_memory.yml
-- import_playbook: bios/default_memory.yml
 
 - import_playbook: bios/default_buffer.yml
-- import_playbook: bios/default_buffer.yml
+# - import_playbook: bios/default_buffer.yml
+
+- import_playbook: bios/default_memory.yml
+# - import_playbook: bios/default_memory.yml
+
+- import_playbook: bios/default_memory_and_buffer.yml
+# - import_playbook: bios/default_memory_and_buffer.yml

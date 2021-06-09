@@ -3,7 +3,7 @@
   hosts: ubuntu
   become: yes
   roles:
-    - role: ../../roles/common
+    - role: ../roles/common
       vars:
 
         test_name: "traffic_1" # Which test is it? Remember to change this in each test. Used to make result dir.

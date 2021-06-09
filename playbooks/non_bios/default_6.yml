@@ -1,0 +1,41 @@
+# DEFAULT SETUP
+
+---
+- name: default_6
+  hosts: ubuntu
+  become: yes
+  roles:
+    - role: ../roles/common
+      vars:
+        test_name: "default_6" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        traffic_gb: 6
+
+        default: yes
+        bios: no
+
+        threading_set_cpu_affinity: 'no'
+        threading_worker_cpu: '"all"'
+        threading_worker_cpu_plain: '0-63 '
+        threading_worker_prio_low: '0'
+        threading_worker_prio_medium: '"1-2"'
+        threading_worker_prio_high: '3'
+        threading_worker_prio_default: "medium"
+
+        afpacket_threads_1: "auto" # Threads in CPU group 1
+        afpacket_threads_2: 0 # Threads in CPU group 2
+        afpacket_clustertype: "cluster_flow" # To bind Suricata to RSS queues
+        afpacket_defrag: "yes"
+        afpacket_usemmap: "no"
+        afpacket_mmaplocked: "no"
+        afpacket_tpacketv3: "no"
+        afpacket_ringsize: 2048
+        afpacket_blocksize: 32768
+
+        max_pending_packets: 1024 # Default is 1024
+
+        runmode: "autofp" # default is autofp
+
+        # Testing (Uncomment to quickly override defaults)
+        # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.
+        # test_seconds: 300 # How long to test.

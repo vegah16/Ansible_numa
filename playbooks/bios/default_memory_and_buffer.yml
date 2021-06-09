@@ -1,18 +1,20 @@
 # Use default buffer sizes.
 
 ---
-- name: default_buffer
+- name: default_memory_and_buffer
   hosts: ubuntu
   become: yes
   roles:
     - role: ../roles/common
       vars:
 
-        test_name: "default_buffer" # Which test is it? Remember to change this in each test. Used to make result dir.
+        test_name: "default_memory_and_buffer" # Which test is it? Remember to change this in each test. Used to make result dir.
 
         afpacket_ringsize: 2048
         afpacket_blocksize: 32768
         max_pending_packets: 1024
+
+        default_memory: yes
 
         threading_management_cpu: '"16", "48"'
         threading_worker_cpu: '"1-10"'

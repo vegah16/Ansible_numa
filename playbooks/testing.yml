@@ -1,0 +1,5 @@
+# Runs all throughput limit load tests in order. Normal testing duration.
+
+---
+- import_playbook: testing/test.yml
+- import_playbook: testing/test2.yml

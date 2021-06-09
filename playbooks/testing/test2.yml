@@ -1,20 +1,24 @@
-# One management thread
+# Use default memory allocation sizes and no local bypass.
 
 ---
-- name: one_mgmt
+- name: test2
   hosts: ubuntu
   become: yes
   roles:
     - role: ../roles/common
       vars:
 
-        test_name: "one_mgmt" # Which test is it? Remember to change this in each test. Used to make result dir.
+        test_name: "6m default memory" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        default_memory: yes
+
+        test_seconds: 360 # How long to test.
 
         threading_management_cpu: '"0"'
-        threading_worker_cpu: '"1-15", "32-47"'
+        threading_worker_cpu: '"1-15"'
 
         afpacket_threads_1: 15 # Threads in CPU group 1
-        afpacket_threads_2: 16 # Threads in CPU group 2
+        afpacket_threads_2: 0 # Threads in CPU group 2
 
         # Testing (Uncomment to quickly override defaults)
         # counters: "capture.kernel_packets,capture.kernel_drops" # Comma separated. Which counters to plot with suri-stats.

@@ -1,13 +1,15 @@
 # DEFAULT SETUP
 
 ---
-- name: Test default
+- name: default_3
   hosts: ubuntu
   become: yes
   roles:
     - role: ../roles/common
       vars:
-        test_name: "default" # Which test is it? Remember to change this in each test. Used to make result dir.
+        test_name: "default_3" # Which test is it? Remember to change this in each test. Used to make result dir.
+
+        traffic_gb: 3
 
         default: yes
         bios: no
